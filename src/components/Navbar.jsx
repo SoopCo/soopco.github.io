@@ -1,8 +1,8 @@
 import React from "react";
 import logo from "../images/logo.png";
-import HeaderElement from "./HeaderElement";
+import NavbarElement from "./NavbarElement";
 
-const Header = () => {
+const Navbar = () => {
     return (
         <div
             style={{
@@ -20,11 +20,11 @@ const Header = () => {
                 className="logo"
                 style={{ margin: "0 10px" }}
             />
-            <HeaderElement>Home</HeaderElement>
-            <HeaderElement>Characters</HeaderElement>
-            <HeaderElement>Books</HeaderElement>
+            <NavbarElement>Home</NavbarElement>
+            <NavbarElement>Characters</NavbarElement>
+            <NavbarElement>Books</NavbarElement>
         </div>
     );
 };
 
-export default Header;
+export default Navbar;

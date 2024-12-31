@@ -1,6 +1,6 @@
 import React from "react";
 
-const Header = ({ children }) => {
+const NavbarElement = ({ children }) => {
     return (
         <div
             style={{
@@ -15,4 +15,4 @@ const Header = ({ children }) => {
     );
 };
 
-export default Header;
+export default NavbarElement;
