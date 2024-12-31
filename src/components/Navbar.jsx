@@ -9,9 +9,8 @@ const Navbar = () => {
                 display: "flex",
                 justifyContent: "center",
                 height: "10vh",
-                outline: "1px solid black",
                 padding: "10px",
-                backgroundColor: "green",
+                backgroundColor: "gray",
             }}
         >
             <img
