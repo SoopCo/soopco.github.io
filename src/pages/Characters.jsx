@@ -12,7 +12,7 @@ const Characters = () => {
         >
             <h1>Your Characters</h1>
             <p>
-                You have lots of <b>really cool</b> characters! Here they are!
+                You have lots of <b>really cool</b> hamsturs! Here they are!
             </p>
             <ol style={{ fontSize: "10rem", margin: "0" }}>
                 <li>

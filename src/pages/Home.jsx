@@ -1,7 +1,10 @@
 import React from "react";
 import logo from "../images/logo.png";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+    const navigate = useNavigate();
+
     return (
         <div
             style={{
@@ -18,7 +21,8 @@ const Home = () => {
             />
             <h1>Welcome to Battle Team</h1>
             <p>
-                Battle Team is a game. <a href="/books">Here</a>
+                Battle Team is a game.{" "}
+                <button onClick={() => navigate("/books")}>Here</button>
                 's but a <b>small</b> taste of one of our most popular campaign
                 books.
             </p>
