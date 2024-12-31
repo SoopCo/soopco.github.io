@@ -20,9 +20,9 @@ const Navbar = () => {
                 className="logo"
                 style={{ margin: "0 10px" }}
             />
-            <NavbarElement>Home</NavbarElement>
-            <NavbarElement>Characters</NavbarElement>
-            <NavbarElement>Books</NavbarElement>
+            <NavbarElement to="/">Home</NavbarElement>
+            <NavbarElement to="characters">Characters</NavbarElement>
+            <NavbarElement to="books">Books</NavbarElement>
         </div>
     );
 };

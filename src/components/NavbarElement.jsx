@@ -1,17 +1,19 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
-const NavbarElement = ({ children }) => {
+const NavbarElement = ({ to, children }) => {
     return (
-        <div
+        <NavLink
             style={{
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
                 margin: "0 10px",
             }}
+            to={to}
         >
             <h1>{children}</h1>
-        </div>
+        </NavLink>
     );
 };
 

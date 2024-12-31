@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "../images/logo.png";
 
-const Navbar = () => {
+const Home = () => {
     return (
         <div
             style={{
@@ -28,4 +28,4 @@ const Navbar = () => {
     );
 };
 
-export default Navbar;
+export default Home;
