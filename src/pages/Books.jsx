@@ -1,5 +1,4 @@
 import React from "react";
-import hamstur from "../images/ly_hamstur.png";
 
 const Books = () => {
     return (
