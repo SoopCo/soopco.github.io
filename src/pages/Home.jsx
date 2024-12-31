@@ -23,7 +23,7 @@ const Home = () => {
                 books.
             </p>
             <p>
-                <i>...{"woff ".repeat(500)}...</i>
+                <i>"...{"woff ".repeat(500)}..."</i>
             </p>
         </div>
     );
