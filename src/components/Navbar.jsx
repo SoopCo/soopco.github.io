@@ -11,7 +11,7 @@ const Navbar = () => {
                 height: "10vh",
                 outline: "1px solid black",
                 padding: "10px",
-                backgroundColor: "white",
+                backgroundColor: "green",
             }}
         >
             <img
