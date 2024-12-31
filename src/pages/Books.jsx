@@ -12,8 +12,11 @@ const Books = () => {
         >
             <h1>Our Books</h1>
             <p>
-                We have some cool books! Sadly, none of them are released except
-                that one book of lore in beta.
+                We have some cool books! Sadly, the only copies not confiscated
+                by Soop lie in Li Librarian's <s>rusty</s> <b>clean</b> library.
+                As this webpage may or may not be sponsored by SoopCo, we cannot
+                give them to you without the resistance base getting attacked.
+                Sorry!
             </p>
         </div>
     );
