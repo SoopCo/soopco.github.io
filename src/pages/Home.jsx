@@ -13,21 +13,9 @@ const Home = () => {
                 alignItems: "center",
             }}
         >
-            <img
-                src={logo}
-                alt="Battle Team Logo"
-                className="logo"
-                style={{ width: "50vw" }}
-            />
             <h1>Welcome to Battle Team</h1>
             <p>
-                Battle Team is a game.{" "}
-                <button onClick={() => navigate("/books")}>Here</button>
-                's but a <b>small</b> taste of one of our most popular campaign
-                books.
-            </p>
-            <p>
-                <i>"...{"woff ".repeat(500)}..."</i> - Sadly a real(ish) quote
+                Battle Team is a rolelplaying game. It's way better than all those other ones. Also, don't worry about any data you had on the old website. It wasn't very important. Also you'll probably be getting it back.{" "}
             </p>
         </div>
     );
