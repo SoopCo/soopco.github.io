@@ -18,8 +18,9 @@ const Home = () => {
             />
             <h1>Welcome to Battle Team</h1>
             <p>
-                Battle Team is a game. <a href="/books">Here</a>'s but a{" "}
-                <b>small</b> taste of one of our most popular campaign books.
+                Battle Team is a game. <a href="/books">Here</a>
+                's but a <b>small</b> taste of one of our most popular campaign
+                books.
             </p>
             <p>
                 <i>...{"woff ".repeat(500)}...</i>
