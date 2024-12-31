@@ -22,6 +22,7 @@ const Navbar = () => {
             <NavbarElement to="/">Home</NavbarElement>
             <NavbarElement to="characters">Characters</NavbarElement>
             <NavbarElement to="books">Books</NavbarElement>
+            <NavbarElement to="news">News</NavbarElement>
         </div>
     );
 };
