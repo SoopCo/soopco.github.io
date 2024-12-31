@@ -14,7 +14,7 @@ const Characters = () => {
             <p>
                 You have lots of <b>really cool</b> characters! Here they are!
             </p>
-            <ol style={{ fontSize: "10rem" }}>
+            <ol style={{ fontSize: "10rem", margin: "0" }}>
                 <li>
                     <img src={hamstur} alt="ERROR 404: hamstur not found" />
                 </li>
