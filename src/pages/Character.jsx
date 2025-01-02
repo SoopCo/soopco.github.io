@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CharacterSheetBox from "../components/CharacterSheetBox";
-import { getCharacterData, setCharacterField } from "../cloud/FirebaseCloud";
+import { getCharacterData, setCharacterField } from "../api/FirebaseCloud";
+import { getExpForLevel } from "../api/Exp";
 
 const Character = () => {
     const { characterId } = useParams();
@@ -27,14 +28,18 @@ const Character = () => {
     };
 
     const addExp = () => {
-        setCharacterField(
-            characterId,
-            "exp",
+        let newExp =
             characterData.exp +
-                parseInt(expAddAmount) *
-                    (parseInt(expAddNumerator || 1) /
-                        parseInt(expAddDenominator || 1))
-        );
+            parseInt(expAddAmount) *
+                (parseInt(expAddNumerator || 1) /
+                    parseInt(expAddDenominator || 1));
+        let newLevel = characterData.level;
+        while (newExp >= getExpForLevel(newLevel)) {
+            newExp -= getExpForLevel(newLevel);
+            newLevel++;
+        }
+        setCharacterField(characterId, "exp", newExp);
+        setCharacterField(characterId, "level", newLevel);
         fetchData();
     };
 
@@ -42,10 +47,11 @@ const Character = () => {
         await getCharacterData(characterId).then((data) => {
             if (data === null) {
                 setCharacterExists(false);
+            } else {
+                setExpAddNumerator(data.level);
+                setExpAddDenominator(data.level);
             }
             setCharacterData(data);
-            setExpAddNumerator(data.level);
-            setExpAddDenominator(data.level);
         });
     }
 
@@ -69,7 +75,10 @@ const Character = () => {
                     </p>
                 </div>
                 <div style={{ margin: "10px" }}>
-                    <h2>EXP {characterData.exp}/100</h2>
+                    <h2>
+                        EXP {characterData.exp}/
+                        {getExpForLevel(characterData.level)}
+                    </h2>
                     <div style={{ display: "flex", flexDirection: "row" }}>
                         <input
                             placeholder="Add EXP..."
