@@ -6,6 +6,7 @@ import Characters from "./pages/Characters";
 import Books from "./pages/Books";
 import NotFound from "./pages/NotFound";
 import News from "./pages/News";
+import Character from "./pages/Character";
 function App() {
     return (
         <div
@@ -22,6 +23,11 @@ function App() {
                 <Routes>
                     <Route exact path="/" element={<Home />} />
                     <Route exact path="/characters" element={<Characters />} />
+                    <Route
+                        exact
+                        path="/characters/:characterId"
+                        element={<Character />}
+                    />
                     <Route exact path="/books" element={<Books />} />
                     <Route exact path="/news" element={<News />} />
                     <Route exact path="*" element={<NotFound />} />

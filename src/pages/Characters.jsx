@@ -16,13 +16,22 @@ const Characters = () => {
             </p>
             <ol style={{ fontSize: "10rem", margin: "0" }}>
                 <li>
-                    <img src={hamstur} alt="ERROR 404: hamstur not found" />
+                    <img
+                        src={hamstur}
+                        alt="ERROR 404: this hamstur not found"
+                    />
                 </li>
                 <li>
-                    <img src={hamstur} alt="ERROR 404: hamstur not found" />
+                    <img
+                        src={hamstur}
+                        alt="ERROR 404: that hamstur not found"
+                    />
                 </li>
                 <li>
-                    <img src={hamstur} alt="ERROR 404: hamstur not found" />
+                    <img
+                        src={hamstur}
+                        alt="ERROR 404: random useless hamstur not found"
+                    />
                 </li>
             </ol>
         </div>
