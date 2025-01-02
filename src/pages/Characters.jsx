@@ -1,7 +1,12 @@
-import React from "react";
-import hamstur from "../images/ly_hamstur.png";
+import React, { useState } from "react";
+import CharacterCreate from "../components/CharacterCreate";
+import { createCharacter } from "../api/FirebaseCloud";
+import { useNavigate } from "react-router-dom";
 
 const Characters = () => {
+    const navigate = useNavigate();
+    const [creatingCharacters, setCreatingCharacters] = useState(false);
+
     return (
         <div
             style={{
@@ -11,29 +16,16 @@ const Characters = () => {
             }}
         >
             <h1>Your Characters</h1>
-            <p>
-                You have lots of <b>really cool</b> hamsturs! Here they are!
-            </p>
-            <ol style={{ fontSize: "10rem", margin: "0" }}>
-                <li>
-                    <img
-                        src={hamstur}
-                        alt="ERROR 404: this hamstur not found"
-                    />
-                </li>
-                <li>
-                    <img
-                        src={hamstur}
-                        alt="ERROR 404: that hamstur not found"
-                    />
-                </li>
-                <li>
-                    <img
-                        src={hamstur}
-                        alt="ERROR 404: random useless hamstur not found"
-                    />
-                </li>
-            </ol>
+            <button onClick={() => setCreatingCharacters(true)}>Create</button>
+            {creatingCharacters && (
+                <CharacterCreate
+                    onCreate={async (name, level) => {
+                        setCreatingCharacters(false);
+                        let characterId = await createCharacter(name, level);
+                        navigate(`/characters/${characterId}`);
+                    }}
+                />
+            )}
         </div>
     );
 };

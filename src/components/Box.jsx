@@ -1,6 +1,6 @@
 import React from "react";
 
-const CharacterSheetBox = ({ children, direction }) => {
+const Box = ({ children, direction, style }) => {
     return (
         <div
             style={{
@@ -13,6 +13,7 @@ const CharacterSheetBox = ({ children, direction }) => {
                 margin: "10px",
                 backgroundColor: "lightgray",
                 justifyContent: "center",
+                ...style,
             }}
         >
             {children}
@@ -20,4 +21,4 @@ const CharacterSheetBox = ({ children, direction }) => {
     );
 };
 
-export default CharacterSheetBox;
+export default Box;

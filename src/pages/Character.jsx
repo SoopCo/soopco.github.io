@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import CharacterSheetBox from "../components/CharacterSheetBox";
+import Box from "../components/Box";
 import { getCharacterData, setCharacterField } from "../api/FirebaseCloud";
 import { getExpForLevel } from "../api/Exp";
 
@@ -66,7 +66,7 @@ const Character = () => {
     }
     return (
         <div>
-            <CharacterSheetBox direction="row">
+            <Box direction="row">
                 <div style={{ margin: "10px" }}>
                     <h1>{characterData.name}</h1>
                     <p>
@@ -122,7 +122,7 @@ const Character = () => {
                         </button>
                     </div>
                 </div>
-            </CharacterSheetBox>
+            </Box>
         </div>
     );
 };

@@ -1,6 +1,11 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore, updateDoc } from "firebase/firestore";
+import {
+    addDoc,
+    collection,
+    getFirestore,
+    updateDoc,
+} from "firebase/firestore";
 // import { getAnalytics } from "firebase/analytics";
 import { doc, getDoc } from "firebase/firestore";
 
@@ -44,4 +49,14 @@ async function setCharacterField(characterId, field, value) {
     });
 }
 
-export { getCharacterData, setCharacterField };
+async function createCharacter(name, level) {
+    const docRef = await addDoc(collection(db, "characters"), {
+        name: name,
+        level: level,
+        classes: [],
+        exp: 0,
+    });
+    return docRef.id;
+}
+
+export { getCharacterData, setCharacterField, createCharacter };
