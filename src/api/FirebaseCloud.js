@@ -57,6 +57,28 @@ async function createCharacter(name, level) {
         level: level,
         classes: [],
         exp: 0,
+        attributes: {
+            agi: 15,
+            dex: 10,
+            str: 0,
+            per: 10,
+            luk: 0,
+            vit: 10,
+            wis: 10,
+            int: 10,
+        },
+        inventory: [],
+        currency: {
+            copper: 0,
+            silver: 0,
+            gold: 0,
+            platinum: 0,
+            emerald: 0,
+            diamond: 0,
+        },
+        resistanceBonuses: {},
+        poolValues: { hp: 100, mana: 100 },
+        skills: [{ unarmedattack: 0, magicbolt: 1 }],
     });
     return docRef.id;
 }
@@ -66,6 +88,7 @@ async function createUser(username, password) {
         username: username,
         password: await sha256(password),
         characters: [],
+        admin: false,
     });
 }
 
@@ -87,6 +110,17 @@ async function getUserData(username) {
     }
 }
 
+async function getSkillData(skillId) {
+    const docRef = doc(db, "skills", skillId);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        return docSnap.data();
+    } else {
+        return null;
+    }
+}
+
 export {
     getCharacterData,
     setCharacterField,
@@ -94,4 +128,5 @@ export {
     createUser,
     addCharacterToUser,
     getUserData,
+    getSkillData,
 };
