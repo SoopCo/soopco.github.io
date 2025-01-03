@@ -57,7 +57,7 @@ const Character = () => {
 
     useEffect(() => {
         fetchData();
-    }, [characterId]);
+    }, [characterId, fetchData]);
     if (!characterExists) {
         return <h1>Character not found!</h1>;
     }

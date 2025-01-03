@@ -2,12 +2,16 @@
 import { initializeApp } from "firebase/app";
 import {
     addDoc,
+    arrayUnion,
     collection,
     getFirestore,
+    setDoc,
     updateDoc,
+    doc,
+    getDoc,
 } from "firebase/firestore";
 // import { getAnalytics } from "firebase/analytics";
-import { doc, getDoc } from "firebase/firestore";
+import { sha256 } from "crypto-hash";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -34,10 +38,8 @@ async function getCharacterData(characterId) {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-        console.log("Character data:", docSnap.data());
-        return docSnap.data();
+        return { id: characterId, ...docSnap.data() };
     } else {
-        console.log("No such character!");
         return null;
     }
 }
@@ -59,4 +61,37 @@ async function createCharacter(name, level) {
     return docRef.id;
 }
 
-export { getCharacterData, setCharacterField, createCharacter };
+async function createUser(username, password) {
+    await setDoc(doc(db, "users", username), {
+        username: username,
+        password: await sha256(password),
+        characters: [],
+    });
+}
+
+async function addCharacterToUser(username, characterId) {
+    const docRef = doc(db, "users", username);
+    await updateDoc(docRef, {
+        characters: arrayUnion(characterId),
+    });
+}
+
+async function getUserData(username) {
+    const docRef = doc(db, "users", username);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        return docSnap.data();
+    } else {
+        return null;
+    }
+}
+
+export {
+    getCharacterData,
+    setCharacterField,
+    createCharacter,
+    createUser,
+    addCharacterToUser,
+    getUserData,
+};
