@@ -7,6 +7,10 @@ import {
     setCharacterField,
 } from "../api/FirebaseCloud";
 import { getExpForLevel } from "../api/Exp";
+import Actions from "../components/Actions";
+import Hitter from "../components/Roller";
+import Roller from "../components/Roller";
+import Pool from "../components/Pool";
 
 const Character = () => {
     const { characterId } = useParams();
@@ -45,8 +49,16 @@ const Character = () => {
         }
         setCharacterField(characterId, "exp", newExp);
         setCharacterField(characterId, "level", newLevel);
-        characterData.exp = newExp;
-        characterData.level = newLevel;
+        setCharacterData({ ...characterData, exp: newExp });
+        setCharacterData({ ...characterData, level: newLevel });
+    };
+
+    const updatePoolValue = (pool, value) => {
+        setCharacterField(characterId, `poolValues.${pool}`, value);
+        setCharacterData({
+            ...characterData,
+            poolValues: { ...characterData.poolValues, [pool]: value },
+        });
     };
 
     useEffect(() => {
@@ -151,54 +163,43 @@ const Character = () => {
                         return 0;
                     })
                     .map(([key, value]) => (
-                        <Box key={key} style={{ width: "5vw" }}>
-                            <h1>{value}</h1>
-                            <h3>{key.toUpperCase()}</h3>
-                        </Box>
+                        <Roller key={key} title={key.toUpperCase()} width="5vw">
+                            {value}
+                        </Roller>
                     ))}
             </div>
-            <Box>
-                <h2>Actions</h2>
-                {actions
-                    .sort((a, b) => {
-                        if (a.skillLevel < b.skillLevel) return -1;
-                        if (a.skillLevel > b.skillLevel) return 1;
-                        return 0;
-                    })
-                    .map((action) => (
-                        <div
-                            key={action.name}
-                            style={{ display: "flex", flexDirection: "row" }}
-                        >
-                            <h1>{action.name}</h1>
-                            {Object.entries(action.fields)
-                                .sort((a, b) => {
-                                    if (a[0] < b[0]) return -1;
-                                    if (a[0] > b[0]) return 1;
-                                    return 0;
-                                })
-                                .map(([key, value]) => {
-                                    const SkillLevel = action.skillLevel;
-                                    const stats = characterData;
-                                    return (
-                                        <div
-                                            key={key}
-                                            style={{ margin: "0 25px" }}
-                                        >
-                                            <h3>
-                                                {key.charAt(0).toUpperCase() +
-                                                    key.slice(1)}
-                                            </h3>
-                                            <p>
-                                                {eval(value.value) +
-                                                    (" " + value.type || "")}
-                                            </p>
-                                        </div>
-                                    );
-                                })}
-                        </div>
-                    ))}
-            </Box>
+            <div style={{ display: "flex", direction: "row" }}>
+                <div style={{ justifyContent: "flex-start" }}>
+                    <Roller title="Avoid">
+                        d20+{Math.floor(characterData.attributes.dex / 2)}
+                    </Roller>
+                    <Roller title="Hit">
+                        d20+{Math.floor(characterData.attributes.dex / 2)}
+                    </Roller>
+                    <Roller title="M. Hit">
+                        d20+{Math.floor(characterData.attributes.int / 2)}
+                    </Roller>
+                </div>
+                <div style={{ justifyContent: "flex-start" }}>
+                    <Pool
+                        title="HP"
+                        pool="hp"
+                        value={characterData.poolValues.hp}
+                        max={characterData.attributes.vit * 10}
+                        regen={Math.floor(characterData.attributes.vit / 10)}
+                        updatePoolValue={updatePoolValue}
+                    />
+                    <Pool
+                        title="Mana"
+                        pool="mana"
+                        value={characterData.poolValues.mana}
+                        max={characterData.attributes.int * 10}
+                        regen={Math.floor(characterData.attributes.wis / 10)}
+                        updatePoolValue={updatePoolValue}
+                    />
+                </div>
+                <Actions characterData={characterData} actions={actions} />
+            </div>
         </div>
     );
 };
