@@ -4,7 +4,7 @@ import NavbarElement from "./NavbarElement";
 import { AuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
-    const { auth } = useContext(AuthContext);
+    const { auth, setAuth } = useContext(AuthContext);
 
     return (
         <div
@@ -36,6 +36,14 @@ const Navbar = () => {
                     }}
                 >
                     <h1>{auth.username}</h1>
+                    <h1
+                        onClick={() => {
+                            setAuth(null);
+                        }}
+                        style={{ marginLeft: "10px" }}
+                    >
+                        Logout
+                    </h1>
                 </div>
             ) : (
                 <div style={{ display: "flex", flexDirection: "row" }}>
