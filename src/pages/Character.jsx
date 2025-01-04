@@ -8,7 +8,6 @@ import {
 } from "../api/FirebaseCloud";
 import { getExpForLevel } from "../api/Exp";
 import Actions from "../components/Actions";
-import Hitter from "../components/Roller";
 import Roller from "../components/Roller";
 import Pool from "../components/Pool";
 

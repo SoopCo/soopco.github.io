@@ -1,5 +1,4 @@
 import React from "react";
-import Roller from "./Roller";
 import Box from "./Box";
 
 const Pool = ({ title, pool, value, max, updatePoolValue, regen }) => {
@@ -26,7 +25,7 @@ const Pool = ({ title, pool, value, max, updatePoolValue, regen }) => {
                 }}
             />
             <h2 style={{ margin: 0 }}>{max}</h2>
-            <h7>Regen {regen || 0}</h7>
+            <h6>Regen {regen || 0}</h6>
             <h3 style={{ margin: 0 }}>{title}</h3>
         </Box>
     );
