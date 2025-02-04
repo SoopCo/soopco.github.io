@@ -7,7 +7,6 @@ import Box from "../components/Box";
 
 const BookManager = () => {
     const { auth } = useContext(AuthContext);
-    const navigate = useNavigate();
 
     const [books, setBooks] = useState([]);
     const [newBookId, setNewBookId] = useState("");

@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Books = () => {
+    const navigate = useNavigate();
     return (
         <div
             style={{
@@ -11,12 +13,14 @@ const Books = () => {
         >
             <h1>Our Books</h1>
             <p>
-                We have some cool books! Sadly, the only copies not confiscated
-                by Soop lie in Li Librarian's <s>rusty</s> <b>clean</b> library.
-                As this webpage may or may not be sponsored by SoopCo, we cannot
-                give them to you without the resistance base getting attacked.
-                Sorry!
+                We have some cool books! The Basic Rulebook can be view for
+                free!
             </p>
+            <button>
+                <h2 onClick={() => navigate("/book/basicrulebook")}>
+                    Take me to the Basic Rules
+                </h2>
+            </button>
         </div>
     );
 };
