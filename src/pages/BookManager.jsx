@@ -7,6 +7,7 @@ import Box from "../components/Box";
 
 const BookManager = () => {
     const { auth } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const [books, setBooks] = useState([]);
     const [newBookId, setNewBookId] = useState("");
@@ -34,6 +35,7 @@ const BookManager = () => {
                 console.log(admin);
                 if (!admin) {
                     console.log("Sorry, you are not an admin.");
+                    navigate("/");
                     return;
                 }
                 const books = await getBooks();
@@ -41,6 +43,8 @@ const BookManager = () => {
                 setBooks(books);
             };
             fetchBooks();
+        } else {
+            navigate("/");
         }
     }, [auth, booksCreated]);
 
