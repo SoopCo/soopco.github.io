@@ -16,6 +16,8 @@ import Character from "./pages/Character";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import { AuthProvider, AuthContext } from "./context/AuthContext";
+import BookManager from "./pages/BookManager";
+import Book from "./pages/Book";
 
 const PrivateRoute = ({ element }) => {
     const { auth } = useContext(AuthContext);
@@ -49,6 +51,12 @@ function App() {
                             element={<PrivateRoute element={<Character />} />}
                         />
                         <Route exact path="/books" element={<Books />} />
+                        <Route
+                            exact
+                            path="/bookmanager"
+                            element={<BookManager />}
+                        />
+                        <Route exact path="/book/:bookId" element={<Book />} />
                         <Route exact path="/news" element={<News />} />
 
                         <Route exact path="/signup" element={<Signup />} />

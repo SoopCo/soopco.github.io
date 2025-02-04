@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import Box from "../components/Box";
 import {
     getCharacterData,
+    getItemData,
     getSkillData,
     setCharacterField,
 } from "../api/FirebaseCloud";
@@ -78,11 +79,19 @@ const Character = () => {
     useEffect(() => {
         async function updateActions() {
             let newActions = [];
-            for (var skill in characterData.skills || []) {
+            for (var skill of Object.keys(characterData.skills) || []) {
                 let skillLevel = characterData.skills[skill];
                 let skillData = await getSkillData(skill);
                 newActions.push({ skillLevel, ...skillData });
             }
+            console.log(characterData.inventory);
+            for (var item of characterData.inventory || []) {
+                console.log("item", item);
+                let itemData = await getItemData(item);
+                console.log(itemData);
+                newActions.push({ skillLevel: 0, ...itemData });
+            }
+            console.log(newActions);
             setActions(newActions);
         }
         if (characterData != null) {

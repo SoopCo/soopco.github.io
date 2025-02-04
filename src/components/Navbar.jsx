@@ -1,10 +1,23 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import logo from "../images/logo.png";
 import NavbarElement from "./NavbarElement";
 import { AuthContext } from "../context/AuthContext";
+import { getUserData } from "../api/FirebaseCloud";
 
 const Navbar = () => {
     const { auth, setAuth } = useContext(AuthContext);
+    const [isAdmin, setIsAdmin] = useState(false);
+
+    useEffect(() => {
+        if (auth !== null) {
+            // TODO: Make it so only admins can access
+            const fetchIsAdmin = async () => {
+                const admin = (await getUserData(auth.username)).admin;
+                setIsAdmin(admin);
+            };
+            fetchIsAdmin();
+        }
+    }, [auth]);
 
     return (
         <div
@@ -25,6 +38,9 @@ const Navbar = () => {
             <NavbarElement to="/">Home</NavbarElement>
             {auth && <NavbarElement to="characters">Characters</NavbarElement>}
             <NavbarElement to="books">Books</NavbarElement>
+            {isAdmin && (
+                <NavbarElement to="bookmanager">Book Manager</NavbarElement>
+            )}
             <NavbarElement to="news">News</NavbarElement>
             {auth ? (
                 <div

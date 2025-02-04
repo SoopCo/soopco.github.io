@@ -9,6 +9,7 @@ import {
     updateDoc,
     doc,
     getDoc,
+    getDocs,
 } from "firebase/firestore";
 // import { getAnalytics } from "firebase/analytics";
 import { sha256 } from "crypto-hash";
@@ -121,6 +122,52 @@ async function getSkillData(skillId) {
     }
 }
 
+async function getItemData(itemId) {
+    console.log("item", itemId);
+    const docRef = doc(db, "items", itemId);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        return docSnap.data();
+    } else {
+        return null;
+    }
+}
+
+async function setBook(bookId, data) {
+    console.log("book", bookId);
+    console.log("data", data);
+    await setDoc(doc(db, "books", bookId), data);
+}
+
+async function setBookLink(bookId, link) {
+    console.log("book", bookId);
+    console.log("link", link);
+    const docRef = doc(db, "books", bookId);
+    await updateDoc(docRef, {
+        link,
+    });
+}
+
+async function getBooks() {
+    const docRef = collection(db, "books");
+    const docSnap = await getDocs(docRef);
+
+    return docSnap.docs.map((d) => d.data());
+}
+
+async function getBook(bookId) {
+    console.log("book", bookId);
+    const docRef = doc(db, "books", bookId);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        return docSnap.data();
+    } else {
+        return null;
+    }
+}
+
 export {
     getCharacterData,
     setCharacterField,
@@ -129,4 +176,9 @@ export {
     addCharacterToUser,
     getUserData,
     getSkillData,
+    getItemData,
+    setBook,
+    setBookLink,
+    getBooks,
+    getBook,
 };
