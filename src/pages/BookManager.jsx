@@ -1,7 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 // import { gapi } from "gapi-script"; // Google API client
 import { AuthContext } from "../context/AuthContext";
-import { getBooks, getUserData, setBook } from "../api/FirebaseCloud";
+import {
+    deleteBook,
+    getBooks,
+    getUserData,
+    setBook,
+} from "../api/FirebaseCloud";
 import { useNavigate } from "react-router-dom";
 import Box from "../components/Box";
 
@@ -14,7 +19,19 @@ const BookManager = () => {
     const [newBookTitle, setNewBookTitle] = useState("");
     const [newBookLink, setNewBookLink] = useState("");
     const [newBookEnabled, setNewBookEnabled] = useState(false);
-    const [booksCreated, setBooksCreated] = useState(0);
+
+    const refreshBooks = async () => {
+        const admin = (await getUserData(auth.username)).admin;
+        console.log(admin);
+        if (!admin) {
+            console.log("Sorry, you are not an admin.");
+            navigate("/");
+            return;
+        }
+        const books = await getBooks();
+        console.log(books);
+        setBooks(books);
+    };
 
     const createBook = () => {
         setBook(newBookId, {
@@ -24,7 +41,7 @@ const BookManager = () => {
         setNewBookId("");
         setNewBookTitle("");
         setNewBookLink("");
-        setBooksCreated(booksCreated + 1);
+        refreshBooks();
     };
 
     useEffect(() => {
@@ -33,24 +50,11 @@ const BookManager = () => {
 
     useEffect(() => {
         if (auth !== null) {
-            // TODO: Make it so only admins can access
-            const fetchBooks = async () => {
-                const admin = (await getUserData(auth.username)).admin;
-                console.log(admin);
-                if (!admin) {
-                    console.log("Sorry, you are not an admin.");
-                    navigate("/");
-                    return;
-                }
-                const books = await getBooks();
-                console.log(books);
-                setBooks(books);
-            };
-            fetchBooks();
+            refreshBooks();
         } else {
             navigate("/");
         }
-    }, [auth, booksCreated]);
+    }, [auth]);
 
     useEffect(() => {
         setNewBookEnabled(
@@ -87,6 +91,14 @@ const BookManager = () => {
                         {book.title}
                     </h2>
                     <p>Link: {book.link}</p>
+                    <p
+                        onClick={() => {
+                            deleteBook(book.id);
+                            refreshBooks();
+                        }}
+                    >
+                        <u>Delete</u>
+                    </p>
                 </Box>
             ))}
         </div>

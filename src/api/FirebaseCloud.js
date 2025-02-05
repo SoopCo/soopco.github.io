@@ -10,6 +10,7 @@ import {
     doc,
     getDoc,
     getDocs,
+    deleteDoc,
 } from "firebase/firestore";
 // import { getAnalytics } from "firebase/analytics";
 import { sha256 } from "crypto-hash";
@@ -168,6 +169,11 @@ async function getBook(bookId) {
     }
 }
 
+async function deleteBook(bookId) {
+    console.log("book", bookId);
+    await deleteDoc(doc(db, "books", bookId));
+}
+
 export {
     getCharacterData,
     setCharacterField,
@@ -181,4 +187,5 @@ export {
     setBookLink,
     getBooks,
     getBook,
+    deleteBook,
 };
