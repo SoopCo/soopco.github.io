@@ -22,7 +22,8 @@ const RemotePage = ({ id, allowed, book }) => {
 
     useEffect(() => {
         const fetchDoc = async () => {
-            const admin = (await getUserData(auth.username)).admin;
+            const admin =
+                auth != null && (await getUserData(auth.username)).admin;
             if (!allowed(admin, id)) {
                 setHasAccess(false);
                 return;
