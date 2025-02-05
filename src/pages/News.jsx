@@ -14,12 +14,13 @@ const News = () => {
             }}
         >
             <h1>News</h1>
-            <p>
-                The Battle Team Basic Rulebook is being revised! You can expect
-                a release in January of 2025! This website is still being
-                developed! Also, hopefully there will be different pages that
-                you can go to for news.
-            </p>
+            <h2>New Features!</h2>
+            <ul>
+                <li>Books! You can now view the Battle Team Basic Rulebook here on the website! Other books will hopefully be viewable in the near future.</li>
+                <li>Characters! We have added character sheets, though limited. We will continue to work on more features!</li>
+                <li>Accounts! There are accounts!</li>
+                <li>News! We've updated the news! (but you knew that already)</li>
+            </ul>
         </div>
     );
 };
