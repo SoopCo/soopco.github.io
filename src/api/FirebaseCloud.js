@@ -174,6 +174,45 @@ async function deleteBook(bookId) {
     await deleteDoc(doc(db, "books", bookId));
 }
 
+async function setNewsItem(newsId, data) {
+    console.log("news", newsId);
+    console.log("data", data);
+    await setDoc(doc(db, "news", newsId), data);
+}
+
+async function setNewsLink(newsId, link) {
+    console.log("news", newsId);
+    console.log("link", link);
+    const docRef = doc(db, "news", newsId);
+    await updateDoc(docRef, {
+        link,
+    });
+}
+
+async function getNews() {
+    const docRef = collection(db, "news");
+    const docSnap = await getDocs(docRef);
+
+    return docSnap.docs.map((d, i) => ({ ...d.data(), id: d.id }));
+}
+
+async function getNewsItem(newsId) {
+    console.log("news", newsId);
+    const docRef = doc(db, "news", newsId);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        return docSnap.data();
+    } else {
+        return null;
+    }
+}
+
+async function deleteNewsItem(newsId) {
+    console.log("news", newsId);
+    await deleteDoc(doc(db, "news", newsId));
+}
+
 export {
     getCharacterData,
     setCharacterField,
@@ -188,4 +227,9 @@ export {
     getBooks,
     getBook,
     deleteBook,
+    setNewsItem,
+    setNewsLink,
+    getNews,
+    getNewsItem,
+    deleteNewsItem,
 };

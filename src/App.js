@@ -18,6 +18,8 @@ import Login from "./pages/Login";
 import { AuthProvider, AuthContext } from "./context/AuthContext";
 import BookManager from "./pages/BookManager";
 import Book from "./pages/Book";
+import NewsPreviewItem from "./components/NewsPreviewItem";
+import NewsItem from "./pages/NewsItem";
 
 const PrivateRoute = ({ element }) => {
     const { auth } = useContext(AuthContext);
@@ -33,6 +35,7 @@ function App() {
                 minHeight: "100vh",
                 width: "100%",
                 height: "100%",
+                fontFamily: "Georgia, serif",
             }}
         >
             <AuthProvider>
@@ -57,6 +60,12 @@ function App() {
                             element={<BookManager />}
                         />
                         <Route exact path="/book/:bookId" element={<Book />} />
+                        <Route
+                            exact
+                            path="/newsItem/:newsId"
+                            element={<NewsItem />}
+                        />
+
                         <Route exact path="/news" element={<News />} />
 
                         <Route exact path="/signup" element={<Signup />} />

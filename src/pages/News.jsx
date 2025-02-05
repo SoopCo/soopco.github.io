@@ -1,9 +1,40 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import NewsPreviewItem from "../components/NewsPreviewItem";
+import { getNews, getUserData, setNewsItem } from "../api/FirebaseCloud";
+import { AuthContext } from "../context/AuthContext";
+import ContentAdder from "../components/ContentAdder";
 
 const News = () => {
+    const { auth } = useContext(AuthContext);
+    const [news, setNews] = useState([]);
+    const [isAdmin, setIsAdmin] = useState(false);
+
+    const refreshNews = async () => {
+        setNews(await getNews());
+    };
+
+    const createNews = (newNewsId, newNewsTitle, newNewsLink) => {
+        setNewsItem(newNewsId, {
+            title: newNewsTitle,
+            link: newNewsLink
+                .replace("edit", "export")
+                .replace("usp=", "format=html&usp="),
+        });
+        refreshNews();
+    };
+
     useEffect(() => {
         document.title = `Battle Team - News`;
+        refreshNews();
     });
+
+    useEffect(() => {
+        const updateIsAdmin = async () => {
+            const admin = (await getUserData(auth.username)).admin;
+            setIsAdmin(admin);
+        };
+        updateIsAdmin();
+    }, [auth]);
 
     return (
         <div
@@ -14,12 +45,16 @@ const News = () => {
             }}
         >
             <h1>News</h1>
-            <p>
-                The Battle Team Basic Rulebook is being revised! You can expect
-                a release in January of 2025! This website is still being
-                developed! Also, hopefully there will be different pages that
-                you can go to for news.
-            </p>
+            {isAdmin ? (
+                <ContentAdder onSubmit={createNews} title="News" />
+            ) : null}
+            {news.map((newsItem) => (
+                <NewsPreviewItem
+                    title={newsItem.title}
+                    to={newsItem.id}
+                    key={newsItem.id}
+                />
+            ))}
         </div>
     );
 };

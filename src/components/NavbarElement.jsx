@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-const NavbarElement = ({ to, children }) => {
+const NavbarElement = ({ to, children, onClick }) => {
     return (
         <NavLink
             style={{
@@ -11,6 +11,7 @@ const NavbarElement = ({ to, children }) => {
                 margin: "0 10px",
             }}
             to={to}
+            onClick={onClick}
         >
             <h1>{children}</h1>
         </NavLink>

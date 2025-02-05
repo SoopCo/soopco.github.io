@@ -8,17 +8,14 @@ import {
     setBook,
 } from "../api/FirebaseCloud";
 import { useNavigate } from "react-router-dom";
-import Box from "../components/Box";
+import ContentAdder from "../components/ContentAdder";
+import ContentElement from "../components/ContentElement";
 
 const BookManager = () => {
     const { auth } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const [books, setBooks] = useState([]);
-    const [newBookId, setNewBookId] = useState("");
-    const [newBookTitle, setNewBookTitle] = useState("");
-    const [newBookLink, setNewBookLink] = useState("");
-    const [newBookEnabled, setNewBookEnabled] = useState(false);
 
     const refreshBooks = async () => {
         const admin = (await getUserData(auth.username)).admin;
@@ -33,14 +30,13 @@ const BookManager = () => {
         setBooks(books);
     };
 
-    const createBook = () => {
+    const createBook = (newBookId, newBookTitle, newBookLink) => {
         setBook(newBookId, {
             title: newBookTitle,
-            link: newBookLink.replace("edit?usp=sharing", "export?format=html"),
+            link: newBookLink
+                .replace("edit", "export")
+                .replace("usp=", "format=html&usp="),
         });
-        setNewBookId("");
-        setNewBookTitle("");
-        setNewBookLink("");
         refreshBooks();
     };
 
@@ -56,50 +52,20 @@ const BookManager = () => {
         }
     }, [auth]);
 
-    useEffect(() => {
-        setNewBookEnabled(
-            newBookId !== "" && newBookTitle !== "" && newBookLink !== ""
-        );
-    }, [newBookId, newBookTitle, newBookLink]);
     return (
         <div>
             <h1>Admin Book Manager</h1>
-            <Box>
-                <h2>Add Book</h2>
-                <input
-                    value={newBookId}
-                    onChange={(e) => setNewBookId(e.target.value)}
-                    placeholder="Book ID"
-                />
-                <input
-                    value={newBookTitle}
-                    onChange={(e) => setNewBookTitle(e.target.value)}
-                    placeholder="Book Title"
-                />
-                <input
-                    value={newBookLink}
-                    onChange={(e) => setNewBookLink(e.target.value)}
-                    placeholder="Book Link"
-                />
-                <button disabled={!newBookEnabled} onClick={createBook}>
-                    Create Book!
-                </button>
-            </Box>
+            <ContentAdder onSubmit={createBook} title="Book" />
             {books.map((book) => (
-                <Box key={book.title}>
-                    <h2 onClick={() => navigate(`/book/${book.id}`)}>
-                        {book.title}
-                    </h2>
-                    <p>Link: {book.link}</p>
-                    <p
-                        onClick={() => {
-                            deleteBook(book.id);
-                            refreshBooks();
-                        }}
-                    >
-                        <u>Delete</u>
-                    </p>
-                </Box>
+                <ContentElement
+                    key={book.id}
+                    content={book}
+                    onClick={() => navigate(`/book/${book.id}`)}
+                    onDelete={() => {
+                        deleteBook(book.id);
+                        refreshBooks();
+                    }}
+                />
             ))}
         </div>
     );

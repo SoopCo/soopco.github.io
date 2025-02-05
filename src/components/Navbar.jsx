@@ -52,14 +52,13 @@ const Navbar = () => {
                     }}
                 >
                     <h1>{auth.username}</h1>
-                    <h1
+                    <NavbarElement
                         onClick={() => {
                             setAuth(null);
                         }}
-                        style={{ marginLeft: "10px" }}
                     >
                         Logout
-                    </h1>
+                    </NavbarElement>
                 </div>
             ) : (
                 <div style={{ display: "flex", flexDirection: "row" }}>
