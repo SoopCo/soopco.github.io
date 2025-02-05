@@ -50,7 +50,7 @@ const Book = () => {
                 <div>
                     <div
                         dangerouslySetInnerHTML={{ __html: docContent }}
-                        style={{ padding: "0 20vw" }}
+                        style={{ width: "60vw" }}
                     ></div>
                 </div>
             ) : (
