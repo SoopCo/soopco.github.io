@@ -13,6 +13,10 @@ const Book = () => {
     const [hasAccess, setHasAccess] = useState(true);
 
     useEffect(() => {
+        document.title = `Battle Team - ${bookTitle}`;
+    });
+
+    useEffect(() => {
         const fetchDoc = async () => {
             const admin = (await getUserData(auth.username)).admin;
             if (!admin && bookId != "basicrulebook") {

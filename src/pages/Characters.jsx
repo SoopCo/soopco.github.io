@@ -16,6 +16,11 @@ const Characters = () => {
     const navigate = useNavigate();
     const [creatingCharacters, setCreatingCharacters] = useState(false);
     const [characters, setCharacters] = useState([]);
+
+    useEffect(() => {
+        document.title = `Battle Team - Characters`;
+    });
+
     useEffect(() => {
         if (auth !== null) {
             const fetchCharacters = async () => {
@@ -27,6 +32,7 @@ const Characters = () => {
             fetchCharacters();
         }
     }, [auth]);
+
     return (
         <div
             style={{

@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Books = () => {
     const navigate = useNavigate();
+
+    useEffect(() => {
+        document.title = `Battle Team - Books`;
+    });
+
     return (
         <div
             style={{

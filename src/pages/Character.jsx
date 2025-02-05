@@ -62,6 +62,10 @@ const Character = () => {
     };
 
     useEffect(() => {
+        document.title = `Battle Team - Loading Character`;
+    }, []);
+
+    useEffect(() => {
         async function fetchData() {
             await getCharacterData(characterId).then((data) => {
                 if (data === null) {
@@ -69,6 +73,7 @@ const Character = () => {
                 } else {
                     setExpAddNumerator(data.level);
                     setExpAddDenominator(data.level);
+                    document.title = `Battle Team - ${data.name}`;
                 }
                 setCharacterData(data);
             });
@@ -98,12 +103,15 @@ const Character = () => {
             updateActions();
         }
     }, [characterData]);
+
     if (!characterExists) {
         return <h1>Character not found!</h1>;
     }
+
     if (characterData === null) {
         return <h1>Loading character...</h1>;
     }
+
     return (
         <div>
             <div style={{ display: "flex", direction: "row" }}>

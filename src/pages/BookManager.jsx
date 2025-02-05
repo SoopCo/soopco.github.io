@@ -28,6 +28,10 @@ const BookManager = () => {
     };
 
     useEffect(() => {
+        document.title = `Battle Team - Admin Book Manager`;
+    });
+
+    useEffect(() => {
         if (auth !== null) {
             // TODO: Make it so only admins can access
             const fetchBooks = async () => {

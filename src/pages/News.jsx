@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const News = () => {
+    useEffect(() => {
+        document.title = `Battle Team - News`;
+    });
+
     return (
         <div
             style={{

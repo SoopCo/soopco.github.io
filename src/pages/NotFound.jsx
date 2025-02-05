@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import hamstur from "../images/ly_hamstur.png";
 
 const NotFound = () => {
+    useEffect(() => {
+        document.title = `Battle Team - Not found`;
+    });
+
     return (
         <div
             style={{

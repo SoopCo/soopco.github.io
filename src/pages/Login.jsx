@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
@@ -13,6 +13,10 @@ const Login = () => {
         setAuth(auth);
         navigate("/");
     };
+
+    useEffect(() => {
+        document.title = `Battle Team - Login`;
+    });
 
     return (
         <div>

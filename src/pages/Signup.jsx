@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { createUser } from "../api/FirebaseCloud";
@@ -15,6 +15,10 @@ const Signup = () => {
         setAuth(auth);
         navigate("/login");
     };
+
+    useEffect(() => {
+        document.title = `Battle Team - Signup`;
+    });
 
     return (
         <div>
