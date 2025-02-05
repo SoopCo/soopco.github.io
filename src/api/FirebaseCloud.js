@@ -153,7 +153,7 @@ async function getBooks() {
     const docRef = collection(db, "books");
     const docSnap = await getDocs(docRef);
 
-    return docSnap.docs.map((d) => d.data());
+    return docSnap.docs.map((d, i) => ({ ...d.data(), id: d.id }));
 }
 
 async function getBook(bookId) {

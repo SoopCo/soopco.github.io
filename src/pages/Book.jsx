@@ -44,7 +44,6 @@ const Book = () => {
         >
             {hasAccess && docContent != null ? (
                 <div>
-                    <h1>{bookTitle}</h1>
                     <div
                         dangerouslySetInnerHTML={{ __html: docContent }}
                         style={{ padding: "0 20vw" }}

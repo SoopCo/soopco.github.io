@@ -79,7 +79,9 @@ const BookManager = () => {
             </Box>
             {books.map((book) => (
                 <Box key={book.title}>
-                    <h2>{book.title}</h2>
+                    <h2 onClick={() => navigate(`/book/${book.id}`)}>
+                        {book.title}
+                    </h2>
                     <p>Link: {book.link}</p>
                 </Box>
             ))}
