@@ -9,6 +9,8 @@ const NavbarElement = ({ to, children, onClick }) => {
                 justifyContent: "center",
                 alignItems: "center",
                 margin: "0 10px",
+                textDecoration: "none",
+                color: "black",
             }}
             to={to}
             onClick={onClick}
