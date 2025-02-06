@@ -9,7 +9,6 @@ const NewsItem = () => {
             id={newsId}
             allowed={(admin, id) => true}
             book={false}
-            showTitle
         />
     );
 };

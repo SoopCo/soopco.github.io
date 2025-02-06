@@ -64,6 +64,7 @@ const News = () => {
             {news.map((newsItem) => (
                 <NewsPreviewItem
                     title={newsItem.title}
+                    subtitle={newsItem.timestamp.toDate().toDateString()}
                     to={newsItem.id}
                     key={newsItem.id}
                     preview={

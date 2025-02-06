@@ -3,7 +3,7 @@ import { getBook, getNewsItem, getUserData } from "../api/FirebaseCloud";
 import { AuthContext } from "../context/AuthContext";
 import { fetchRemoteContent } from "../api/RemoteContent";
 
-const RemoteContentView = ({ id, allowed, book, showTitle }) => {
+const RemoteContentView = ({ id, allowed, book, showTitle, subtitle }) => {
     const { auth } = useContext(AuthContext);
 
     const [title, setTitle] = useState("Loading...");
@@ -45,6 +45,7 @@ const RemoteContentView = ({ id, allowed, book, showTitle }) => {
             {hasAccess && docContent != null ? (
                 <div>
                     {showTitle ? <h1>{title}</h1> : null}
+                    {subtitle ? <h3>{subtitle}</h3> : null}
                     <div
                         dangerouslySetInnerHTML={{ __html: docContent }}
                         style={{ width: "60vw" }}

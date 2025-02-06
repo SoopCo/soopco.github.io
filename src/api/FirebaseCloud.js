@@ -11,7 +11,9 @@ import {
     getDoc,
     getDocs,
     deleteDoc,
+    Timestamp,
     orderBy,
+    query,
 } from "firebase/firestore";
 // import { getAnalytics } from "firebase/analytics";
 import { sha256 } from "crypto-hash";
@@ -178,7 +180,12 @@ async function deleteBook(bookId) {
 async function setNewsItem(newsId, data) {
     console.log("news", newsId);
     console.log("data", data);
-    await setDoc(doc(db, "news", newsId), data);
+    const docRef = doc(db, "news", newsId);
+    var newData = data;
+    if (!docRef.exists()) {
+        newData.timestamp = Timestamp.now();
+    }
+    await setDoc(docRef, newData);
 }
 
 async function setNewsLink(newsId, link) {
@@ -191,7 +198,7 @@ async function setNewsLink(newsId, link) {
 }
 
 async function getNews() {
-    const docRef = collection(db, "news"); // TODO: Order by creation date (add a child when creating)
+    const docRef = query(collection(db, "news"), orderBy("timestamp", "desc"));
     const docSnap = await getDocs(docRef);
 
     return docSnap.docs.map((d, i) => ({ ...d.data(), id: d.id }));
