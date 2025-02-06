@@ -8,8 +8,9 @@ import {
 } from "../api/FirebaseCloud";
 import DOMPurify from "dompurify";
 import { AuthContext } from "../context/AuthContext";
+import { fetchRemoteContent } from "../api/RemoteContent";
 
-const RemotePage = ({ id, allowed, book }) => {
+const RemoteContentView = ({ id, allowed, book, showTitle }) => {
     const { auth } = useContext(AuthContext);
 
     const [title, setTitle] = useState("Loading...");
@@ -33,9 +34,7 @@ const RemotePage = ({ id, allowed, book }) => {
                 return;
             }
             setTitle(bookData.title);
-            const url = bookData.link;
-            const response = await fetch(url);
-            const text = await response.text();
+            const text = await fetchRemoteContent(bookData.link);
             // const sanitizedContent = DOMPurify.sanitize(text);
             setDocContent(text);
         };
@@ -53,10 +52,11 @@ const RemotePage = ({ id, allowed, book }) => {
         >
             {hasAccess && docContent != null ? (
                 <div>
+                    {showTitle ? <h1>{title}</h1> : null}
                     <div
                         dangerouslySetInnerHTML={{ __html: docContent }}
                         style={{ width: "60vw" }}
-                    ></div>
+                    />
                 </div>
             ) : (
                 <h1>
@@ -68,4 +68,4 @@ const RemotePage = ({ id, allowed, book }) => {
     );
 };
 
-export default RemotePage;
+export default RemoteContentView;

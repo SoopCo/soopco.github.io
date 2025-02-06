@@ -1,11 +1,11 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import RemotePage from "../components/RemotePage";
+import RemoteContentView from "../components/RemoteContentView";
 
 const Book = () => {
     const { bookId } = useParams();
     return (
-        <RemotePage
+        <RemoteContentView
             id={bookId}
             allowed={(admin, id) => admin || id == "basicrulebook"}
             book

@@ -3,6 +3,9 @@ import NewsPreviewItem from "../components/NewsPreviewItem";
 import { getNews, getUserData, setNewsItem } from "../api/FirebaseCloud";
 import { AuthContext } from "../context/AuthContext";
 import ContentAdder from "../components/ContentAdder";
+import { fetchRemoteContent } from "../api/RemoteContent";
+import ReactHtmlParser from "react-html-parser";
+import ReactDOMServer from "react-dom/server";
 
 const News = () => {
     const { auth } = useContext(AuthContext);
@@ -10,7 +13,16 @@ const News = () => {
     const [isAdmin, setIsAdmin] = useState(false);
 
     const refreshNews = async () => {
-        setNews(await getNews());
+        setNews(
+            await Promise.all(
+                (
+                    await getNews()
+                ).map(async (n) => ({
+                    ...n,
+                    content: await fetchRemoteContent(n.link),
+                }))
+            )
+        );
     };
 
     const createNews = (newNewsId, newNewsTitle, newNewsLink) => {
@@ -26,7 +38,7 @@ const News = () => {
     useEffect(() => {
         document.title = `Battle Team - News`;
         refreshNews();
-    });
+    }, []);
 
     useEffect(() => {
         const updateIsAdmin = async () => {
@@ -55,6 +67,12 @@ const News = () => {
                     title={newsItem.title}
                     to={newsItem.id}
                     key={newsItem.id}
+                    preview={
+                        ReactHtmlParser(newsItem.content)[0]?.props
+                            ?.children?.[1]?.props?.children?.[0]?.props
+                            ?.children?.[0]?.props?.children?.[0] + "..." ??
+                        "Not Found"
+                    }
                 />
             ))}
         </div>
