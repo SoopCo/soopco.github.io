@@ -18,7 +18,7 @@ const Signup = () => {
 
     useEffect(() => {
         document.title = `Battle Team - Signup`;
-    });
+    }, []);
 
     return (
         <div>

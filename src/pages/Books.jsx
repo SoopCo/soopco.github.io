@@ -6,7 +6,7 @@ const Books = () => {
 
     useEffect(() => {
         document.title = `Battle Team - Books`;
-    });
+    }, []);
 
     return (
         <div
@@ -18,7 +18,7 @@ const Books = () => {
         >
             <h1>Our Books</h1>
             <p>
-                We have some cool books! The Basic Rulebook can be view for
+                We have some cool books! The Basic Rulebook can be viewed for
                 free!
             </p>
             <button>

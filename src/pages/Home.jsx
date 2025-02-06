@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 const Home = () => {
     useEffect(() => {
         document.title = `Battle Team - Home`;
-    });
+    }, []);
 
     return (
         <div

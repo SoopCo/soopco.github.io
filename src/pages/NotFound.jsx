@@ -3,8 +3,8 @@ import hamstur from "../images/ly_hamstur.png";
 
 const NotFound = () => {
     useEffect(() => {
-        document.title = `Battle Team - Not found`;
-    });
+        document.title = `Battle Team - Not Found`;
+    }, []);
 
     return (
         <div

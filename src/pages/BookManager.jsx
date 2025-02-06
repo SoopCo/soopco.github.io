@@ -42,7 +42,7 @@ const BookManager = () => {
 
     useEffect(() => {
         document.title = `Battle Team - Admin Book Manager`;
-    });
+    }, []);
 
     useEffect(() => {
         if (auth !== null) {

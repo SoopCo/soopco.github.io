@@ -5,7 +5,6 @@ import { AuthContext } from "../context/AuthContext";
 import ContentAdder from "../components/ContentAdder";
 import { fetchRemoteContent } from "../api/RemoteContent";
 import ReactHtmlParser from "react-html-parser";
-import ReactDOMServer from "react-dom/server";
 
 const News = () => {
     const { auth } = useContext(AuthContext);

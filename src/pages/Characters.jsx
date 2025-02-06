@@ -19,7 +19,7 @@ const Characters = () => {
 
     useEffect(() => {
         document.title = `Battle Team - Characters`;
-    });
+    }, []);
 
     useEffect(() => {
         if (auth !== null) {

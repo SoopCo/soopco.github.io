@@ -16,7 +16,7 @@ const Login = () => {
 
     useEffect(() => {
         document.title = `Battle Team - Login`;
-    });
+    }, []);
 
     return (
         <div>

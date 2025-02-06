@@ -11,6 +11,7 @@ import {
     getDoc,
     getDocs,
     deleteDoc,
+    orderBy,
 } from "firebase/firestore";
 // import { getAnalytics } from "firebase/analytics";
 import { sha256 } from "crypto-hash";
@@ -190,7 +191,7 @@ async function setNewsLink(newsId, link) {
 }
 
 async function getNews() {
-    const docRef = collection(db, "news");
+    const docRef = collection(db, "news"); // TODO: Order by creation date (add a child when creating)
     const docSnap = await getDocs(docRef);
 
     return docSnap.docs.map((d, i) => ({ ...d.data(), id: d.id }));

@@ -1,12 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import {
-    getBook,
-    getNews,
-    getNewsItem,
-    getUserData,
-} from "../api/FirebaseCloud";
-import DOMPurify from "dompurify";
+import { getBook, getNewsItem, getUserData } from "../api/FirebaseCloud";
 import { AuthContext } from "../context/AuthContext";
 import { fetchRemoteContent } from "../api/RemoteContent";
 
@@ -19,7 +12,7 @@ const RemoteContentView = ({ id, allowed, book, showTitle }) => {
 
     useEffect(() => {
         document.title = `Battle Team - ${title}`;
-    });
+    }, []);
 
     useEffect(() => {
         const fetchDoc = async () => {
@@ -38,7 +31,6 @@ const RemoteContentView = ({ id, allowed, book, showTitle }) => {
             // const sanitizedContent = DOMPurify.sanitize(text);
             setDocContent(text);
         };
-
         fetchDoc();
     }, [id]);
 
