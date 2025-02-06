@@ -19,7 +19,7 @@ const ContentAdder = ({ onSubmit, title }) => {
     }, [newId, newTitle, newLink]);
 
     return (
-        <Box>
+        <Box style={{ width: "60vw" }}>
             <h1>Add {title}</h1>
             <input
                 value={newId}
