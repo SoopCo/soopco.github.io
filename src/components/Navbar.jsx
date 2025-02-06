@@ -3,6 +3,7 @@ import logo from "../images/logo.png";
 import NavbarElement from "./NavbarElement";
 import { AuthContext } from "../context/AuthContext";
 import { getUserData } from "../api/FirebaseCloud";
+import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
     const { auth, setAuth } = useContext(AuthContext);
@@ -29,12 +30,14 @@ const Navbar = () => {
                 backgroundColor: "gray",
             }}
         >
-            <img
-                src={logo}
-                alt="Battle Team Logo"
-                className="logo"
-                style={{ margin: "0 10px" }}
-            />
+            <NavLink to="/">
+                <img
+                    src={logo}
+                    alt="Battle Team Logo"
+                    className="logo"
+                    style={{ margin: "0 10px", maxHeight: "10vh" }}
+                />
+            </NavLink>
             <NavbarElement to="/">Home</NavbarElement>
             {auth && <NavbarElement to="characters">Characters</NavbarElement>}
             <NavbarElement to="books">Books</NavbarElement>
