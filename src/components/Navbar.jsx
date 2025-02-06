@@ -38,7 +38,6 @@ const Navbar = () => {
                     style={{ margin: "0 10px", maxHeight: "10vh" }}
                 />
             </NavLink>
-            <NavbarElement to="/">Home</NavbarElement>
             {auth && <NavbarElement to="characters">Characters</NavbarElement>}
             <NavbarElement to="books">Books</NavbarElement>
             {isAdmin && (
