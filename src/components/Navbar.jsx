@@ -50,7 +50,7 @@ const Navbar = () => {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        margin: "0 40px",
+                        margin: "0 10px",
                     }}
                 >
                     <h1>{auth.username}</h1>
