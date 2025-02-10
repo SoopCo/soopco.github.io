@@ -11,6 +11,8 @@ const NavbarElement = ({ to, children, onClick }) => {
                 margin: "0 10px",
                 textDecoration: "none",
                 color: "black",
+                hover: "blue",
+                active: "light-blue",
             }}
             to={to}
             onClick={onClick}
