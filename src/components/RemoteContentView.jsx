@@ -12,7 +12,7 @@ const RemoteContentView = ({ id, allowed, book, showTitle, subtitle }) => {
 
     useEffect(() => {
         document.title = `Battle Team - ${title}`;
-    }, []);
+    }, [title]);
 
     useEffect(() => {
         const fetchDoc = async () => {
@@ -32,7 +32,7 @@ const RemoteContentView = ({ id, allowed, book, showTitle, subtitle }) => {
             setDocContent(text);
         };
         fetchDoc();
-    }, [id]);
+    }, [id, allowed, auth, book]);
 
     return (
         <div

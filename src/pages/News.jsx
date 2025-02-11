@@ -41,7 +41,7 @@ const News = () => {
 
     useEffect(() => {
         const updateIsAdmin = async () => {
-            if (auth == null || auth.username == null || auth.username == "")
+            if (auth === null || auth.username === null || auth.username === "")
                 return;
             const admin = (await getUserData(auth.username)).admin;
             setIsAdmin(admin);

@@ -18,7 +18,6 @@ import Login from "./pages/Login";
 import { AuthProvider, AuthContext } from "./context/AuthContext";
 import BookManager from "./pages/BookManager";
 import Book from "./pages/Book";
-import NewsPreviewItem from "./components/NewsPreviewItem";
 import NewsItem from "./pages/NewsItem";
 
 const PrivateRoute = ({ element }) => {

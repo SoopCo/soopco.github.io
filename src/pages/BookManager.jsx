@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 // import { gapi } from "gapi-script"; // Google API client
 import { AuthContext } from "../context/AuthContext";
 import {
@@ -17,7 +17,7 @@ const BookManager = () => {
 
     const [books, setBooks] = useState([]);
 
-    const refreshBooks = async () => {
+    const refreshBooks = useCallback(async () => {
         const admin = (await getUserData(auth.username)).admin;
         console.log(admin);
         if (!admin) {
@@ -28,7 +28,7 @@ const BookManager = () => {
         const books = await getBooks();
         console.log(books);
         setBooks(books);
-    };
+    }, [auth, navigate]);
 
     const createBook = (newBookId, newBookTitle, newBookLink) => {
         setBook(newBookId, {
@@ -50,7 +50,7 @@ const BookManager = () => {
         } else {
             navigate("/");
         }
-    }, [auth]);
+    }, [auth, navigate, refreshBooks]);
 
     return (
         <div>

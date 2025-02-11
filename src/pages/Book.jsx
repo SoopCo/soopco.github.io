@@ -7,7 +7,7 @@ const Book = () => {
     return (
         <RemoteContentView
             id={bookId}
-            allowed={(admin, id) => admin || id == "basicrulebook"}
+            allowed={(admin, id) => admin || id === "basicrulebook"}
             book
         />
     );
