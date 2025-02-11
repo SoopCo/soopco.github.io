@@ -182,7 +182,7 @@ async function setNewsItem(newsId, data) {
     console.log("data", data);
     const docRef = doc(db, "news", newsId);
     var newData = data;
-    if (!docRef.exists()) {
+    if (!Object.keys(newData).includes("timestamp")) {
         newData.timestamp = Timestamp.now();
     }
     await setDoc(docRef, newData);
