@@ -20,7 +20,7 @@ const Home = () => {
             </p>
             <p>
                 <bold>
-                    Character of the month: La Gote
+                    March Character of the Month: La Gote
                 </bold>
             </p>
             <img src={gote} alt="A gote (a four-headed hydra goat.)" width="409" height="500"></img>
