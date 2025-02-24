@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import gote from "../images/gote.png";
 
 const Home = () => {
     useEffect(() => {
@@ -22,7 +23,7 @@ const Home = () => {
                     Character of the month: La Gote
                 </bold>
             </p>
-            <img src="../images/gote.png" alt="A gote (a four-headed hydra goat.)" width="409" height="500"></img>
+            <img src={gote} alt="A gote (a four-headed hydra goat.)" width="409" height="500"></img>
             <p>
                 La Gote is a gote (a four-headed hydra goat.) He cofounded the Resistance in an alte- what do you mean this is a spoiler? What do you mean I'm fired?
             </p>
