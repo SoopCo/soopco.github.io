@@ -53,7 +53,9 @@ const Navbar = () => {
                         margin: "0 10px",
                     }}
                 >
-                    <h1>{auth.username}</h1>
+                    <h1 style={{
+                        marginLeft: "50px"
+                    }}>{auth.username}</h1>
                     <NavbarElement
                         onClick={() => {
                             setAuth(null);
