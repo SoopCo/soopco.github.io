@@ -15,6 +15,7 @@ import {
     orderBy,
     query,
 } from "firebase/firestore";
+import { getAuth, signInAnonymously } from "firebase/auth";
 // import { getAnalytics } from "firebase/analytics";
 import { sha256 } from "crypto-hash";
 
@@ -37,6 +38,16 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
+
+const auth = getAuth(app);
+
+signInAnonymously(auth)
+    .then(() => {})
+    .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+    }); // maybe use firebase auth users instad?
 
 async function getCharacterData(characterId) {
     const docRef = doc(db, "characters", characterId);
