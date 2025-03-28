@@ -20,15 +20,15 @@ const Home = () => {
             </p>
             <p>
                 <bold>
-                    March Character of the Month: La Gote
+                    April Character of the Month: Ler Bedger
                 </bold>
             </p>
-            <img src={gote} alt="A gote (a four-headed hydra goat.)" width="409" height="500"></img>
+            <img src={gote} alt="A bedger (a giant badger with wings and 3 eyes)" width="409" height="500"></img>
             <p>
-                La Gote is a gote (a four-headed hydra goat.) He cofounded the Resistance in an alte- what do you mean this is a spoiler? What do you mean I'm fired?
+                Ler Bedger is a bedger (A giant badger with wings and 3 eyes) and a loyal member of the Resistance. He has tried to take over the resistance many times because he is the smartest person ever! In fact-
             </p>
             <p>
-                Sorry about that, folks. I just saved you from a spoiler. You're welcome. Anyway, La Gote is a major character in the upcoming campaign "Battle Team: War for Battalia!" Get ready for a cool, awesome, and amazing campaign!
+                Hey! What are you doing in here, Ler Bedger? Stop praising yourself! Anyway, Ler Bedger is a major character in the upcoming "Battle Team: War for Battalia" campaign!
             </p>
         </div>
     );
