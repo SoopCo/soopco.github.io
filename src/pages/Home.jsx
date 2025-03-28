@@ -23,7 +23,7 @@ const Home = () => {
                     April Character of the Month: Ler Bedger
                 </bold>
             </p>
-            <img src={bedger} alt="A bedger (a giant badger with wings and 3 eyes)" width="409" height="500"></img>
+            <img src={bedger} alt="A bedger (a giant badger with wings and 3 eyes)" width="641" height="406"></img>
             <p>
                 Ler Bedger is a bedger (A giant badger with wings and 3 eyes) and a loyal member of the Resistance. He has tried to take over the resistance many times because he is the smartest person ever! In fact-
             </p>
