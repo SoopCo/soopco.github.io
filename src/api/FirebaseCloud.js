@@ -149,6 +149,24 @@ async function getItemData(itemId) {
     }
 }
 
+async function getAllClasses() {
+    const docRef = collection(db, "classes");
+    const docSnap = await getDocs(docRef);
+    return docSnap.docs.map(d => d.data());
+}
+
+async function getClassData(classId) {
+    console.log("class", classId);
+    const docRef = doc(db, "classes", classId);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        return docSnap.data();
+    } else {
+        return null;
+    }
+}
+
 async function setBook(bookId, data) {
     console.log("book", bookId);
     console.log("data", data);
@@ -241,6 +259,8 @@ export {
     getUserData,
     getSkillData,
     getItemData,
+    getAllClasses,
+    getClassData,
     setBook,
     setBookLink,
     getBooks,

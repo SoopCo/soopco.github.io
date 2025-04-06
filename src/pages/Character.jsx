@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import Box from "../components/Box";
 import {
     getCharacterData,
+    getClassData,
+    getAllClasses,
     getItemData,
     getSkillData,
     setCharacterField,
@@ -21,6 +23,9 @@ const Character = () => {
     const [expAddNumerator, setExpAddNumerator] = useState(1);
     const [expAddDenominator, setExpAddDenominator] = useState(1);
     const [actions, setActions] = useState([]);
+    const [classes, setClasses] = useState([]);
+    const [classChoices, setClassChoices] = useState([]);
+
 
     const updateExpAddAmount = (event) => {
         let value = event.target.value;
@@ -72,10 +77,21 @@ const Character = () => {
         });
     }
 
+    const getAttribute = (attribute) => {
+        return parseInt(characterData.attributes[attribute]) + (classes.length == 0 ? 0 : parseInt(
+            classes.map(
+                (c) => 
+                    (parseInt(c.attrs?.start?.[attribute] ?? 0) + parseInt((c.attrs?.lvl?.[attribute] || 0) * (characterData.level - 1)))
+            )
+            .reduce((a, b) => a+b)
+            )
+        );
+    }
+
     const regen = (e) => {
         e.preventDefault();
-        let newHp = parseInt(characterData.poolValues.hp) + Math.floor(characterData.attributes.vit / 2);
-        let newMana = parseInt(characterData.poolValues.mana) + Math.floor(characterData.attributes.wis / 2);
+        let newHp = parseInt(characterData.poolValues.hp) + Math.floor(getAttribute("vit") / 2);
+        let newMana = parseInt(characterData.poolValues.mana) + Math.floor(getAttribute("wis") / 2);
         setCharacterField(characterId, "poolValues.hp", newHp);
         setCharacterField(characterId, "poolValues.mana", newMana);
         setCharacterData({
@@ -112,18 +128,28 @@ const Character = () => {
                 let skillData = await getSkillData(skill);
                 newActions.push({ skillLevel, ...skillData });
             }
-            console.log(characterData.inventory);
             for (var item of characterData.inventory || []) {
-                console.log("item", item);
                 let itemData = await getItemData(item);
-                console.log(itemData);
                 newActions.push({ skillLevel: 0, ...itemData });
             }
-            console.log(newActions);
             setActions(newActions);
+        }
+        async function updateClasses() {
+            let newClasses = [];
+            for (var classId of Object.values(characterData.classes) || []) {
+                let classData = await getClassData(classId);
+                newClasses.push(classData);
+            }
+            setClasses(newClasses);
+        }
+        async function updateClassChoices() {
+            let classData = await getAllClasses();
+            setClassChoices(classData.filter(c => parseInt(c.stage) == characterData.classes.length + 1).map(c => ({ name: c.name, id: c })));
         }
         if (characterData != null) {
             updateActions();
+            updateClasses();
+            updateClassChoices();
         }
     }, [characterData]);
 
@@ -143,7 +169,10 @@ const Character = () => {
                         <h1>{characterData.name}</h1>
                         <p>
                             Level {characterData.level}{" "}
-                            {characterData.classes.join("-")}
+                            {classes.map((c) => c?.name).join(" - ")}
+                            {(classes.length == Math.ceil(characterData.level/10) || classChoices.length == 0) ? null : <select>
+                                <option value={""}>Choose a Class</option>
+                                {classChoices.map((k) => <option key={k.id} value={k.id}>{k.name}</option>)}</select>}
                         </p>
                     </div>
                     <div style={{ margin: "10px" }}>
@@ -203,7 +232,7 @@ const Character = () => {
                     })
                     .map(([key, value]) => (
                         <Roller key={key} title={key.toUpperCase()} width="5vw">
-                            {value}{Object.values(characterData.attributes).reduce((a, b) => a + b) < 60+characterData.level*5 ? <div>{" "}
+                            {getAttribute(key)}{Object.values(characterData.attributes).reduce((a, b) => a + b) < 60+characterData.level*5 ? <div>{" "}
                             <button onClick={() => updateAttribute(key, value+1)}>+</button>
                             </div> : null}
                         </Roller>
@@ -212,13 +241,13 @@ const Character = () => {
             <div style={{ display: "flex", direction: "row" }}>
                 <div style={{ justifyContent: "flex-start" }}>
                     <Roller title="Avoid">
-                        d20+{Math.floor(characterData.attributes.dex / 2)}
+                        d20+{Math.floor(getAttribute("dex") / 2)}
                     </Roller>
                     <Roller title="Hit">
-                        d20+{Math.floor(characterData.attributes.dex / 2)}
+                        d20+{Math.floor(getAttribute("dex") / 2)}
                     </Roller>
                     <Roller title="M. Hit">
-                        d20+{Math.floor(characterData.attributes.int / 2)}
+                        d20+{Math.floor(getAttribute("int") / 2)}
                     </Roller>
                 </div>
                 <div style={{ justifyContent: "flex-start" }}>
@@ -227,20 +256,20 @@ const Character = () => {
                         title="HP"
                         pool="hp"
                         value={characterData.poolValues.hp}
-                        max={characterData.attributes.vit * 10}
-                        regen={Math.floor(characterData.attributes.vit / 2)}
+                        max={getAttribute("vit") * 10}
+                        regen={Math.floor(getAttribute("vit") / 2)}
                         updatePoolValue={updatePoolValue}
                     />
                     <Pool
                         title="Mana"
                         pool="mana"
                         value={characterData.poolValues.mana}
-                        max={characterData.attributes.wis * 10}
-                        regen={Math.floor(characterData.attributes.wis / 2)}
+                        max={getAttribute("wis") * 10}
+                        regen={Math.floor(getAttribute("wis") / 2)}
                         updatePoolValue={updatePoolValue}
                     />
                 </div>
-                <Actions characterData={characterData} actions={actions} />
+                <Actions characterData={characterData} actions={actions} getAttribute={getAttribute}/>
             </div>
         </div>
     );

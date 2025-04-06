@@ -2,7 +2,6 @@ import React from "react";
 import Box from "./Box";
 
 const CharacterListElement = ({ characterData, onClick }) => {
-    console.log(characterData);
     return (
         <div onClick={onClick}>
             <Box style={{ width: "90vw" }}>

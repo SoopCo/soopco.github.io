@@ -1,10 +1,7 @@
 import React, {useEffect} from "react";
 import Box from "./Box";
 
-const Actions = ({ characterData, actions }) => {
-    useEffect(() => {
-        console.log("actions", actions);
-    }, [actions]);
+const Actions = ({ characterData, actions, getAttribute }) => {
     return (
         <Box
             style={{
