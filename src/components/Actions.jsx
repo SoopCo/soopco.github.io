@@ -1,7 +1,10 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Box from "./Box";
 
 const Actions = ({ characterData, actions }) => {
+    useEffect(() => {
+        console.log("actions", actions);
+    }, [actions]);
     return (
         <Box
             style={{
@@ -11,7 +14,7 @@ const Actions = ({ characterData, actions }) => {
             }}
         >
             <h1 style={{ display: "flex", alignSelf: "center" }}>Actions</h1>
-            {actions
+            {actions == [] ? null : actions
                 .sort((a, b) => {
                     if (a.skillLevel < b.skillLevel) return -1;
                     if (a.skillLevel > b.skillLevel) return 1;
@@ -30,7 +33,7 @@ const Actions = ({ characterData, actions }) => {
                         <h2 style={{ display: "flex", alignItems: "center" }}>
                             {action.name}
                         </h2>
-                        {Object.entries(action.fields)
+                        {(Object.entries(action.fields ?? {}))
                             .sort((a, b) => {
                                 if (a[0] < b[0]) return -1;
                                 if (a[0] > b[0]) return 1;

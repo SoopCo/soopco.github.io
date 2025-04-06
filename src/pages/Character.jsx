@@ -49,8 +49,7 @@ const Character = () => {
         }
         setCharacterField(characterId, "exp", newExp);
         setCharacterField(characterId, "level", newLevel);
-        setCharacterData({ ...characterData, exp: newExp });
-        setCharacterData({ ...characterData, level: newLevel });
+        setCharacterData({ ...characterData, exp: newExp, level: newLevel });
     };
 
     const updatePoolValue = (pool, value) => {
@@ -60,6 +59,30 @@ const Character = () => {
             poolValues: { ...characterData.poolValues, [pool]: value },
         });
     };
+
+    const updateAttribute = (attribute, value) => {
+        const newAttributes = {
+            ...characterData.attributes,
+            [attribute]: value,
+        };
+        setCharacterField(characterId, "attributes", newAttributes);
+        setCharacterData({
+            ...characterData,
+            attributes: newAttributes,
+        });
+    }
+
+    const regen = (e) => {
+        e.preventDefault();
+        let newHp = parseInt(characterData.poolValues.hp) + Math.floor(characterData.attributes.vit / 2);
+        let newMana = parseInt(characterData.poolValues.mana) + Math.floor(characterData.attributes.wis / 2);
+        setCharacterField(characterId, "poolValues.hp", newHp);
+        setCharacterField(characterId, "poolValues.mana", newMana);
+        setCharacterData({
+            ...characterData,
+            poolValues: { ...characterData.poolValues, hp: newHp, mana: newMana },
+        });
+    }
 
     useEffect(() => {
         document.title = `Battle Team - Loading Character`;
@@ -180,7 +203,9 @@ const Character = () => {
                     })
                     .map(([key, value]) => (
                         <Roller key={key} title={key.toUpperCase()} width="5vw">
-                            {value}
+                            {value}{Object.values(characterData.attributes).reduce((a, b) => a + b) < 60+characterData.level*5 ? <div>{" "}
+                            <button onClick={() => updateAttribute(key, value+1)}>+</button>
+                            </div> : null}
                         </Roller>
                     ))}
             </div>
@@ -197,20 +222,21 @@ const Character = () => {
                     </Roller>
                 </div>
                 <div style={{ justifyContent: "flex-start" }}>
+                    <button onClick={regen}>Regen</button>
                     <Pool
                         title="HP"
                         pool="hp"
                         value={characterData.poolValues.hp}
                         max={characterData.attributes.vit * 10}
-                        regen={Math.floor(characterData.attributes.vit / 10)}
+                        regen={Math.floor(characterData.attributes.vit / 2)}
                         updatePoolValue={updatePoolValue}
                     />
                     <Pool
                         title="Mana"
                         pool="mana"
                         value={characterData.poolValues.mana}
-                        max={characterData.attributes.int * 10}
-                        regen={Math.floor(characterData.attributes.wis / 10)}
+                        max={characterData.attributes.wis * 10}
+                        regen={Math.floor(characterData.attributes.wis / 2)}
                         updatePoolValue={updatePoolValue}
                     />
                 </div>
