@@ -77,8 +77,18 @@ const Character = () => {
         });
     }
 
+    const addClass = (classId) => {
+        if (classId === "") return;
+        const newClasses = [...characterData.classes, classId.toString()];
+        setCharacterField(characterId, "classes", newClasses);
+        setCharacterData({
+            ...characterData,
+            classes: newClasses,
+        });
+    }
+
     const getAttribute = (attribute) => {
-        return parseInt(characterData.attributes[attribute]) + (classes.length == 0 ? 0 : parseInt(
+        return parseInt(characterData.attributes[attribute]) + (classes.length === 0 ? 0 : parseInt(
             classes.map(
                 (c) => 
                     (parseInt(c.attrs?.start?.[attribute] ?? 0) + parseInt((c.attrs?.lvl?.[attribute] || 0) * (characterData.level - 1)))
@@ -144,7 +154,7 @@ const Character = () => {
         }
         async function updateClassChoices() {
             let classData = await getAllClasses();
-            setClassChoices(classData.filter(c => parseInt(c.stage) == characterData.classes.length + 1).map(c => ({ name: c.name, id: c })));
+            setClassChoices(classData.filter(c => parseInt(c.stage) === characterData.classes.length + 1));
         }
         if (characterData != null) {
             updateActions();
@@ -170,7 +180,7 @@ const Character = () => {
                         <p>
                             Level {characterData.level}{" "}
                             {classes.map((c) => c?.name).join(" - ")}
-                            {(classes.length == Math.ceil(characterData.level/10) || classChoices.length == 0) ? null : <select>
+                            {(classes.length === Math.ceil(characterData.level/10) || classChoices.length === 0) ? null : <select onChange={(e) => {console.log(e);addClass(e.target.value)}}>
                                 <option value={""}>Choose a Class</option>
                                 {classChoices.map((k) => <option key={k.id} value={k.id}>{k.name}</option>)}</select>}
                         </p>

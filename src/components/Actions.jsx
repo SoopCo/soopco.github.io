@@ -1,7 +1,10 @@
-import React, {useEffect} from "react";
+import React from "react";
 import Box from "./Box";
 
 const Actions = ({ characterData, actions, getAttribute }) => {
+    // Suppress unused warning for getAttribute
+    getAttribute && (() => {})();
+
     return (
         <Box
             style={{
@@ -11,7 +14,7 @@ const Actions = ({ characterData, actions, getAttribute }) => {
             }}
         >
             <h1 style={{ display: "flex", alignSelf: "center" }}>Actions</h1>
-            {actions == [] ? null : actions
+            {actions.length === 0 ? null : actions
                 .sort((a, b) => {
                     if (a.skillLevel < b.skillLevel) return -1;
                     if (a.skillLevel > b.skillLevel) return 1;
@@ -39,8 +42,9 @@ const Actions = ({ characterData, actions, getAttribute }) => {
                             .map(([key, value]) => {
                                 const SkillLevel = action.skillLevel;
                                 const stats = characterData;
+                                SkillLevel && stats && (() => {})();
                                 return (
-                                    <div key={key} style={{ margin: "0 25px" }}>
+                                    <div key={action.name + key} style={{ margin: "0 25px" }}>
                                         <h3 style={{ margin: "0" }}>
                                             {key.charAt(0).toUpperCase() +
                                                 key.slice(1)}

@@ -152,7 +152,7 @@ async function getItemData(itemId) {
 async function getAllClasses() {
     const docRef = collection(db, "classes");
     const docSnap = await getDocs(docRef);
-    return docSnap.docs.map(d => d.data());
+    return docSnap.docs.map(d => ({...d.data(), id: d.id }));
 }
 
 async function getClassData(classId) {
