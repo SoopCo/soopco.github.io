@@ -28,6 +28,9 @@ const Navbar = () => {
                 height: "10vh",
                 padding: "10px",
                 backgroundColor: "gray",
+                position: "sticky",
+                top: "0",
+                zIndex: "1000"
             }}
         >
             <NavLink to="/">
