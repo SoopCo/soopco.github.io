@@ -9,6 +9,7 @@ const RemoteContentView = ({ id, allowed, book, showTitle, subtitle }) => {
     const [title, setTitle] = useState("Loading...");
     const [docContent, setDocContent] = useState("");
     const [hasAccess, setHasAccess] = useState(true);
+    const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
         document.title = `Battle Team - ${title}`;
@@ -30,9 +31,14 @@ const RemoteContentView = ({ id, allowed, book, showTitle, subtitle }) => {
             const text = await fetchRemoteContent(bookData.link);
             // const sanitizedContent = DOMPurify.sanitize(text);
             setDocContent(text);
+            setLoaded(true);
         };
         fetchDoc();
     }, [id, allowed, auth, book]);
+
+    if (!loaded) {
+        return <h1>Loading...</h1>
+    }
 
     return (
         <div
