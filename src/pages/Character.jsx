@@ -243,7 +243,7 @@ const Character = () => {
                     .map(([key, value]) => (
                         <Roller key={key} title={key.toUpperCase()} width="5vw">
                             {getAttribute(key)}{Object.values(characterData.attributes).reduce((a, b) => a + b) < 60+characterData.level*5 ? <div>{" "}
-                            <button onClick={() => updateAttribute(key, value+1)}>+</button>
+                            <button onClick={() => updateAttribute(key, value+1)} disabled={key.toLowerCase()==="luk"}>+</button>
                             </div> : null}
                         </Roller>
                     ))}
