@@ -138,7 +138,6 @@ async function getSkillData(skillId) {
 }
 
 async function getItemData(itemId) {
-    console.log("item", itemId);
     const docRef = doc(db, "items", itemId);
     const docSnap = await getDoc(docRef);
 
@@ -156,7 +155,6 @@ async function getAllClasses() {
 }
 
 async function getClassData(classId) {
-    console.log("class", classId);
     const docRef = doc(db, "classes", classId);
     const docSnap = await getDoc(docRef);
 
@@ -168,14 +166,10 @@ async function getClassData(classId) {
 }
 
 async function setBook(bookId, data) {
-    console.log("book", bookId);
-    console.log("data", data);
     await setDoc(doc(db, "books", bookId), data);
 }
 
 async function setBookLink(bookId, link) {
-    console.log("book", bookId);
-    console.log("link", link);
     const docRef = doc(db, "books", bookId);
     await updateDoc(docRef, {
         link,
@@ -190,7 +184,6 @@ async function getBooks() {
 }
 
 async function getBook(bookId) {
-    console.log("book", bookId);
     const docRef = doc(db, "books", bookId);
     const docSnap = await getDoc(docRef);
 
@@ -202,13 +195,10 @@ async function getBook(bookId) {
 }
 
 async function deleteBook(bookId) {
-    console.log("book", bookId);
     await deleteDoc(doc(db, "books", bookId));
 }
 
 async function setNewsItem(newsId, data) {
-    console.log("news", newsId);
-    console.log("data", data);
     const docRef = doc(db, "news", newsId);
     var newData = data;
     if (!Object.keys(newData).includes("timestamp")) {
@@ -218,8 +208,6 @@ async function setNewsItem(newsId, data) {
 }
 
 async function setNewsLink(newsId, link) {
-    console.log("news", newsId);
-    console.log("link", link);
     const docRef = doc(db, "news", newsId);
     await updateDoc(docRef, {
         link,
@@ -234,7 +222,6 @@ async function getNews() {
 }
 
 async function getNewsItem(newsId) {
-    console.log("news", newsId);
     const docRef = doc(db, "news", newsId);
     const docSnap = await getDoc(docRef);
 
@@ -246,7 +233,6 @@ async function getNewsItem(newsId) {
 }
 
 async function deleteNewsItem(newsId) {
-    console.log("news", newsId);
     await deleteDoc(doc(db, "news", newsId));
 }
 

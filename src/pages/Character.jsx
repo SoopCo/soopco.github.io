@@ -77,13 +77,22 @@ const Character = () => {
         });
     }
 
-    const addClass = (classId) => {
+    const addClass = async (classId) => {
         if (classId === "") return;
         const newClasses = [...characterData.classes, classId.toString()];
+        const newAttributes = {
+            ...characterData.attributes,
+        };
+        const classData = await getClassData(classId);
+        if (classData.classStat != null) {
+            newAttributes[classData.classStat] = 0;
+            setCharacterField(characterId, "attributes", newAttributes);
+        }
         setCharacterField(characterId, "classes", newClasses);
         setCharacterData({
             ...characterData,
             classes: newClasses,
+            attributes: newAttributes,
         });
     }
 
@@ -180,7 +189,7 @@ const Character = () => {
                         <p>
                             Level {characterData.level}{" "}
                             {classes.map((c) => c?.name).join(" - ")}
-                            {(classes.length === Math.ceil(characterData.level/10) || classChoices.length === 0) ? null : <select onChange={(e) => {console.log(e);addClass(e.target.value)}}>
+                            {(classes.length === Math.ceil(characterData.level/10) || classChoices.length === 0) ? null : <select onChange={(e) => addClass(e.target.value)}>
                                 <option value={""}>Choose a Class</option>
                                 {classChoices.map((k) => <option key={k.id} value={k.id}>{k.name}</option>)}</select>}
                         </p>

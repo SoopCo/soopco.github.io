@@ -20,9 +20,9 @@ const Actions = ({ characterData, actions, getAttribute }) => {
                     if (a.skillLevel > b.skillLevel) return 1;
                     return 0;
                 })
-                .map((action) => (
+                .map((action, i) => (
                     <div
-                        key={action.name}
+                        key={action.name + i}
                         style={{
                             display: "flex",
                             flexDirection: "row",
