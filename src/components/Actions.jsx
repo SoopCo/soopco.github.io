@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Box from "./Box";
 
 const Actions = ({ characterData, actions, getAttribute, increaseAvailable, increase }) => {
+    const [selectedLevels, setSelectedLevels] = useState({});
+
+    useEffect(() => {
+        setSelectedLevels({});
+        actions.forEach((action) => {
+            setSelectedLevels((prev) => ({
+                ...prev,
+                [action.name]: action.skillLevel,
+            }));
+        });
+    }, [actions]);
+
     // Suppress unused warning for getAttribute
-    getAttribute && (() => {})();
+    getAttribute && (() => { })();
 
     return (
         <Box
@@ -28,9 +40,23 @@ const Actions = ({ characterData, actions, getAttribute, increaseAvailable, incr
                             flexDirection: "row",
                             alignItems: "center",
                             paddingLeft: "10px",
+                            color: action.skillLevel === 0 ? "gray" : "black",
                         }}
                     >
-                        {increaseAvailable && <button onClick={() => increase(action.id, action.skillLevel+1)} disabled={action.skillLevel < 0 || !action.skill}>+</button>}
+                        {increaseAvailable && <button style={{margin: "5px"}} onClick={() => increase(action.id, action.skillLevel + 1)} disabled={action.skillLevel < 0 || !action.skill}>+</button>}
+                        {action.skillLevel > 0 &&
+                            <select style={{margin: "5px"}} 
+                                value={selectedLevels[action.name] || ''}
+                                onChange={(e) => setSelectedLevels(prev => ({
+                                    ...prev,
+                                    [action.name]: parseInt(e.target.value)
+                                }))}
+                            >
+                                {Array.from({ length: action.skillLevel }, (_, i) => i + 1).map(level => (
+                                    <option key={level} value={level}>{level}</option>
+                                ))}
+                            </select>
+                        }
                         <h2 style={{ display: "flex", alignItems: "center" }}>
                             {action.name}
                         </h2>
@@ -43,7 +69,7 @@ const Actions = ({ characterData, actions, getAttribute, increaseAvailable, incr
                             .map(([key, value]) => {
                                 const SkillLevel = action.skillLevel;
                                 const stats = characterData;
-                                SkillLevel && stats && (() => {})();
+                                SkillLevel && stats && (() => { })();
                                 return (
                                     <div key={action.name + key} style={{ margin: "0 25px" }}>
                                         <h3 style={{ margin: "0" }}>
