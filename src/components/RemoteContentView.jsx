@@ -26,7 +26,7 @@ const RemoteContentView = ({ id, allowed, book, showTitle, subtitle }) => {
         }
         var container = document.createElement('div');
         container.innerHTML = pieces[1];
-        const titles = container.getElementsByTagName('title');
+        const titles = container.getElementsByTagName('h1');
         if (titles.length > 0) {
             container.removeChild(titles[0]);
         }
