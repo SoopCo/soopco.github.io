@@ -28,7 +28,7 @@ const Navbar = () => {
                 height: "10vh",
                 padding: "10px",
                 backgroundColor: "gray",
-                position: "fixed",
+                position: "sticky",
                 top: "0",
                 zIndex: "1000"
             }}
