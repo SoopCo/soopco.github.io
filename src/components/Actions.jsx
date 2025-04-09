@@ -1,7 +1,7 @@
 import React from "react";
 import Box from "./Box";
 
-const Actions = ({ characterData, actions, getAttribute }) => {
+const Actions = ({ characterData, actions, getAttribute, increaseAvailable, increase }) => {
     // Suppress unused warning for getAttribute
     getAttribute && (() => {})();
 
@@ -30,6 +30,7 @@ const Actions = ({ characterData, actions, getAttribute }) => {
                             paddingLeft: "10px",
                         }}
                     >
+                        {increaseAvailable && <button onClick={() => increase(action.id, action.skillLevel+1)} disabled={action.skillLevel < 0 || !action.skill}>+</button>}
                         <h2 style={{ display: "flex", alignItems: "center" }}>
                             {action.name}
                         </h2>
@@ -51,7 +52,7 @@ const Actions = ({ characterData, actions, getAttribute }) => {
                                         </h3>
                                         <p style={{ margin: "0" }}>
                                             {eval(value.value) +
-                                                (" " + value.type || "")}
+                                                (" " + (value.type || ""))}
                                         </p>
                                     </div>
                                 );

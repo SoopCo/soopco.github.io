@@ -45,8 +45,8 @@ const Character = () => {
         let newExp =
             characterData.exp +
             parseInt(expAddAmount) *
-                (parseInt(expAddNumerator || 1) /
-                    parseInt(expAddDenominator || 1));
+            (parseInt(expAddNumerator || 1) /
+                parseInt(expAddDenominator || 1));
         let newLevel = characterData.level;
         while (newExp >= getExpForLevel(newLevel)) {
             newExp -= getExpForLevel(newLevel);
@@ -77,6 +77,18 @@ const Character = () => {
         });
     }
 
+    const updateSkillLevel = (skillId, value) => {
+        const newSkills = {
+            ...characterData.skills,
+            [skillId]: value
+        };
+        setCharacterField(characterId, "skills", newSkills);
+        setCharacterData({
+            ...characterData,
+            skills: newSkills,
+        });
+    }
+
     const addClass = async (classId) => {
         if (classId === "") return;
         const newClasses = [...characterData.classes, classId.toString()];
@@ -99,11 +111,11 @@ const Character = () => {
     const getAttribute = (attribute) => {
         return parseInt(characterData.attributes[attribute]) + (classes.length === 0 ? 0 : parseInt(
             classes.map(
-                (c) => 
+                (c) =>
                     (parseInt(c.attrs?.start?.[attribute] ?? 0) + parseInt((c.attrs?.lvl?.[attribute] || 0) * (characterData.level - 1)))
             )
-            .reduce((a, b) => a+b)
-            )
+                .reduce((a, b) => a + b)
+        )
         );
     }
 
@@ -145,14 +157,25 @@ const Character = () => {
             for (var skill of Object.keys(characterData.skills) || []) {
                 let skillLevel = characterData.skills[skill];
                 let skillData = await getSkillData(skill);
-                newActions.push({ skillLevel, ...skillData });
+                newActions.push({ skillLevel, id: skill, skill: true, ...skillData });
             }
             for (var item of characterData.inventory || []) {
                 let itemData = await getItemData(item);
-                newActions.push({ skillLevel: 0, ...itemData });
+                newActions.push({ skillLevel: 0, id: item, skill: false, ...itemData });
             }
             setActions(newActions);
         }
+        async function updateClassChoices() {
+            let classData = await getAllClasses();
+            setClassChoices(classData.filter(c => parseInt(c.stage) === characterData.classes.length + 1));
+        }
+        if (characterData != null) {
+            updateActions();
+            updateClassChoices();
+        }
+    }, [characterData]);
+
+    useEffect(() => {
         async function updateClasses() {
             let newClasses = [];
             for (var classId of Object.values(characterData.classes) || []) {
@@ -161,16 +184,34 @@ const Character = () => {
             }
             setClasses(newClasses);
         }
-        async function updateClassChoices() {
-            let classData = await getAllClasses();
-            setClassChoices(classData.filter(c => parseInt(c.stage) === characterData.classes.length + 1));
-        }
-        if (characterData != null) {
-            updateActions();
+        if (characterData?.classes != null) {
             updateClasses();
-            updateClassChoices();
         }
-    }, [characterData]);
+    }, [characterData?.classes])
+
+    useEffect(() => {
+        const updateClassSpecifics = () => {
+            setCharacterData(characterData => {
+                if (characterData == null) return null;
+                var newSkills = { ...characterData.skills };
+                var newPoolValues = {...characterData.poolValues};
+                for (var classData of classes) {
+                    for (const [id, level] of Object.entries(classData.skills)) {
+                        if (characterData.level >= parseInt(level) && characterData.skills[id] == null) {
+                            newSkills[id] = 0;
+                        }
+                    }
+                    if (classData?.classPool != null && characterData.poolValues?.[classData.classPool.id] == null) {
+                        newPoolValues[classData.classPool.id] = 0;
+                    }
+                }
+                setCharacterField(characterId, "poolValues", newPoolValues);
+                setCharacterField(characterId, "skills", newSkills);
+                return {...characterData, skills: newSkills, poolValues: newPoolValues};
+            });
+        }
+        updateClassSpecifics();
+    }, [classes, characterData?.level, characterId])
 
     if (!characterExists) {
         return <h1>Character not found!</h1>;
@@ -189,7 +230,7 @@ const Character = () => {
                         <p>
                             Level {characterData.level}{" "}
                             {classes.map((c) => c?.name).join(" - ")}
-                            {(classes.length === Math.ceil(characterData.level/10) || classChoices.length === 0) ? null : <select onChange={(e) => addClass(e.target.value)}>
+                            {(classes.length === Math.ceil(characterData.level / 10) || classChoices.length === 0) ? null : <select onChange={(e) => addClass(e.target.value)}>
                                 <option value={""}>Choose a Class</option>
                                 {classChoices.map((k) => <option key={k.id} value={k.id}>{k.name}</option>)}</select>}
                         </p>
@@ -251,8 +292,8 @@ const Character = () => {
                     })
                     .map(([key, value]) => (
                         <Roller key={key} title={key.toUpperCase()} width="5vw">
-                            {getAttribute(key)}{Object.values(characterData.attributes).reduce((a, b) => a + b) < 60+characterData.level*5 ? <div>{" "}
-                            <button onClick={() => updateAttribute(key, value+1)} disabled={key.toLowerCase()==="luk"}>+</button>
+                            {getAttribute(key)}{Object.values(characterData.attributes).reduce((a, b) => a + b) < 60 + characterData.level * 5 ? <div>{" "}
+                                <button onClick={() => updateAttribute(key, value + 1)} disabled={key.toLowerCase() === "luk"}>+</button>
                             </div> : null}
                         </Roller>
                     ))}
@@ -287,8 +328,17 @@ const Character = () => {
                         regen={Math.floor(getAttribute("wis") / 2)}
                         updatePoolValue={updatePoolValue}
                     />
+                    {classes.map((c) => c?.classPool != null ? <Pool
+                        key={c.classPool.id}
+                        title={c.classPool.name}
+                        pool={c.classPool.id}
+                        value={characterData.poolValues[c.classPool.id]}
+                        max={getAttribute(c.classPool.src) * 10}
+                        regen={Math.floor(getAttribute(c.classPool.src) / 2)}
+                        updatePoolValue={updatePoolValue}
+                    /> : null)}
                 </div>
-                <Actions characterData={characterData} actions={actions} getAttribute={getAttribute}/>
+                <Actions characterData={characterData} actions={actions} getAttribute={getAttribute} increaseAvailable={(Object.values(characterData.skills).reduce((a, b) => a + b) + 2) < characterData.level} increase={updateSkillLevel} />
             </div>
         </div>
     );

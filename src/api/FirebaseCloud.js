@@ -94,7 +94,7 @@ async function createCharacter(name, level) {
         },
         resistanceBonuses: {},
         poolValues: { hp: 100, mana: 100 },
-        skills: [{ unarmedattack: 0, magicbolt: 1 }],
+        skills: { unarmedattack: -1 },
     });
     return docRef.id;
 }
