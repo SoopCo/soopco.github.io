@@ -26,7 +26,10 @@ const RemoteContentView = ({ id, allowed, book, showTitle, subtitle }) => {
         }
         var container = document.createElement('div');
         container.innerHTML = pieces[1];
-        container.removeChild(container.getElementsByTagName('h1')[0]);
+        const h1s = container.getElementsByTagName('h1');
+        if (h1s.length > 0) {
+            container.removeChild(h1s[0]);
+        }
         
         const currentHashPath = location.pathname;
 
