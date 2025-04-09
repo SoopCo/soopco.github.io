@@ -35,7 +35,6 @@ const RemoteContentView = ({ id, allowed, book, showTitle, subtitle }) => {
             const originalHash = anchor.getAttribute("href");
             if (!originalHash) return;
             anchor.setAttribute("href", `#${currentHashPath}${originalHash}`);
-            console.log(anchor.innerHTML.split("&nbsp;"), anchor.innerHTML.split("&nbsp;").slice(0, -1))
             anchor.innerHTML = anchor.innerHTML.split("&nbsp;").slice(0, -1).join("&nbsp;");
         });
 
