@@ -20,23 +20,23 @@ const Books = () => {
             <p>
                 We have some cool books!
             </p>
-            <button class="button">
-                <h2 onClick={() => navigate("/rulebooks")}>
+            <button class="button" onClick={() => navigate("/rulebooks")}>
+                <h2>
                     Rulebooks
                 </h2>
             </button>
-            <button class="button">
-                <h2 onClick={() => navigate("/book/lore")}>
+            <button class="button" onClick={() => navigate("/book/lore")}>
+                <h2>
                     The Book of Lore!
                 </h2>
             </button>
-            <button class="button">
-                <h2 onClick={() => navigate("/book/doop")}>
+            <button class="button" onClick={() => navigate("/book/doop")}>
+                <h2>
                     Doop - How to be Evil!
                 </h2>
             </button>
-            <button class="button">
-                <h2 onClick={() => navigate("/book/glarf")}>
+            <button class="button" onClick={() => navigate("/book/glarf")}>
+                <h2>
                     Glarf - How to be Cool!
                 </h2>
             </button>
