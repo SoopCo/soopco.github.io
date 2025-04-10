@@ -25,19 +25,9 @@ const Books = () => {
                     Rulebooks
                 </h2>
             </button>
-            <button class="button" onClick={() => navigate("/book/lore")}>
+            <button class="button" onClick={() => navigate("/storybooks")}>
                 <h2>
-                    The Book of Lore!
-                </h2>
-            </button>
-            <button class="button" onClick={() => navigate("/book/doop")}>
-                <h2>
-                    Doop - How to be Evil!
-                </h2>
-            </button>
-            <button class="button" onClick={() => navigate("/book/glarf")}>
-                <h2>
-                    Glarf - How to be Cool!
+                    Storybooks
                 </h2>
             </button>
         </div>
