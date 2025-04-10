@@ -21,23 +21,8 @@ const Books = () => {
                 We have some cool books!
             </p>
             <button class="button">
-                <h2 onClick={() => navigate("/rulebooks")}>
-                    Rulebooks
-                </h2>
-            </button>
-            <button class="button">
                 <h2 onClick={() => navigate("/book/lore")}>
                     The Book of Lore!
-                </h2>
-            </button>
-            <button class="button">
-                <h2 onClick={() => navigate("/book/doop")}>
-                    Doop - How to be Evil!
-                </h2>
-            </button>
-            <button class="button">
-                <h2 onClick={() => navigate("/book/glarf")}>
-                    Glarf - How to be Cool!
                 </h2>
             </button>
         </div>

@@ -11,3 +11,22 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.button {
+  color: black;
+  background-color: lightgray;
+  outline-color: gray;
+  font-size: 1em;
+  user-select: none;
+  text-align: center;
+}
+.button:hover {
+  transition: background-color 0.5s, color 0.5s;
+  color: gray;
+  background-color: white;
+  outline-color: lightgray;
+  cursor: pointer;
+}
+.button:not(hover) {
+  transition: background-color 0.5s, color 0.5s;
+}
