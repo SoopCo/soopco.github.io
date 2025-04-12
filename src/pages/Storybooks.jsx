@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Books = () => {
+const Storybooks = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -16,22 +16,17 @@ const Books = () => {
                 alignItems: "center",
             }}
         >
-            <h1>Our Books</h1>
+            <h1>Storybooks</h1>
             <p>
-                We have some cool books!
+                These are books that let you learn more about the deep, epic story of Battle Team.
             </p>
-            <button class="button" onClick={() => navigate("/rulebooks")}>
+            <button class="button" onClick={() => navigate("/book/lore")}>
                 <h2>
-                    Rulebooks
-                </h2>
-            </button>
-            <button class="button" onClick={() => navigate("/storybooks")}>
-                <h2>
-                    Storybooks
+                    The Battalia Book of Lore
                 </h2>
             </button>
         </div>
     );
 };
 
-export default Books;
+export default Storybooks;

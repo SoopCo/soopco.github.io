@@ -9,6 +9,8 @@ import {
     Navigate,
 } from "react-router-dom";
 import Characters from "./pages/Characters";
+import Rulebooks from "./pages/Rulebooks";
+import Storybooks from "./pages/Storybooks";
 import Books from "./pages/Books";
 import NotFound from "./pages/NotFound";
 import News from "./pages/News";
@@ -51,6 +53,18 @@ function App() {
                             exact
                             path="/characters/:characterId"
                             element={<PrivateRoute element={<Character />} />}
+                        />
+                        <Route exact path="/storybooks" element={<Storybooks />} />
+                        <Route
+                            exact
+                            path="/storybooks"
+                            element={<Storybooks />}
+                        />
+                        <Route exact path="/rulebooks" element={<Rulebooks />} />
+                        <Route
+                            exact
+                            path="/rulebooks"
+                            element={<Rulebooks />}
                         />
                         <Route exact path="/books" element={<Books />} />
                         <Route
