@@ -19,6 +19,8 @@ code {
   font-size: 1em;
   user-select: none;
   text-align: center;
+  margin: 5px;
+  font-family: Georgia, serif;
 }
 .button:hover {
   transition: background-color 0.5s, color 0.5s;
