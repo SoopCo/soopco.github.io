@@ -4,7 +4,7 @@ import { AuthContext } from "../context/AuthContext";
 import { fetchRemoteContent } from "../api/RemoteContent";
 import { useLocation } from "react-router-dom";
 
-const RemoteContentView = ({ id, allowed, book, showTitle, subtitle }) => {
+const RemoteContentView = ({ id, allowed, book, showTitle, subtitle, extractToc }) => {
     const { auth } = useContext(AuthContext);
     const location = useLocation();
 
@@ -20,6 +20,11 @@ const RemoteContentView = ({ id, allowed, book, showTitle, subtitle }) => {
     }, [title]);
 
     useEffect(() => {
+        if (!extractToc) {
+            setTocHtml("");
+            setMainHtml(docContent);
+            return;
+        }
         const pieces = docContent.split('<hr style="page-break-before:always;display:none;">');
         if (pieces.length < 3) {
             return;
@@ -92,7 +97,7 @@ const RemoteContentView = ({ id, allowed, book, showTitle, subtitle }) => {
                     {showTitle ? <h1>{title}</h1> : null}
                     {subtitle ? <h3>{subtitle}</h3> : null}
                     <div style={{display: "flex", flexDirection: "row"}}> 
-                        <div>
+                        {extractToc && <div>
                             <div
                                 dangerouslySetInnerHTML={{ __html: tocHtml }}
                                 style={{
@@ -109,7 +114,7 @@ const RemoteContentView = ({ id, allowed, book, showTitle, subtitle }) => {
                                 }}
                                 id={`${id}-content-toc`}
                             />
-                        </div>
+                        </div>}
                         <div
                             dangerouslySetInnerHTML={{ __html: mainHtml }}
                             style={{ width: "60vw" }}
