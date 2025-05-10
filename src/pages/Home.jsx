@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import bedger from "../images/ler_bedger.png";
+import twev from "../images/twev.png";
 
 const Home = () => {
     useEffect(() => {
@@ -23,12 +23,12 @@ const Home = () => {
                     April Character of the Month: Ler Bedger
                 </bold>
             </p>
-            <img src={bedger} alt="A bedger (a giant badger with wings and 3 eyes)" width="641" height="406"></img>
+            <img src={twev} alt="Twev, the leader of Battle Team #1." width="641" height="406"></img>
             <p>
-                Ler Bedger is a bedger (A giant badger with wings and 3 eyes) and a loyal member of the Resistance. He has tried to take over the resistance many times because he is the smartest person ever! In fact-
+                Twev is the leader of Battle Team #1, which was later adopted into Battle Team #2. He was the hero who managed to defeat Soop during the Second Great War.
             </p>
             <p>
-                Hey! What are you doing in here, Ler Bedger? Stop praising yourself! Anyway, Ler Bedger is a major character in the upcoming "Battle Team: War for Battalia" campaign!
+                Twev might sometimes brag about accomplishments, but it's usually true.
             </p>
         </div>
     );
